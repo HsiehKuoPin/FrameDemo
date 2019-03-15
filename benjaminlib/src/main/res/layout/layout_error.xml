@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.benjamin.widget.loading.error.SmErrorLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    app:desc_image_network="@drawable/ic_cry"
+    app:desc_image_other="@drawable/ic_cry"
+    app:refresh_text="请点击重试"
+    tools:desc_text="请求出现异常">
+
+    <!--<ImageView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cry" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请求出现异常"
+        android:textColor="@color/colorGray"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tv_try"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="重试"
+        android:textColor="@color/colorMain"
+        android:textSize="15sp"/>-->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textSize="20sp"/>
+
+</com.benjamin.widget.loading.error.SmErrorLinearLayout>

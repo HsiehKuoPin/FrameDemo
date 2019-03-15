@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SmErrorLinearLayout">
+        <attr name="desc_image_other" format="reference"/>
+        <attr name="desc_image_network" format="reference"/>
+        <attr name="desc_text" format="string"/>
+        <attr name="refresh_text" format="string"/>
+        <attr name="click_scope" format="string">
+            <enum name="button" value="0"/>
+            <enum name="global" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>
