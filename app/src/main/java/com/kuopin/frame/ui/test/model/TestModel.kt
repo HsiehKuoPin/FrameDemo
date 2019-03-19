@@ -9,7 +9,7 @@ import io.reactivex.Observable
  * @describe
  * @author  Benjamin
  * @date 2019/3/19  10:37
- * 								 - generate by MvpAutoCodePlus plugin.
+ *
  */
 
 class TestModel : ITestContract.Model {

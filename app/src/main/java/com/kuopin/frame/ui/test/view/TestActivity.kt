@@ -1,9 +1,7 @@
 package com.kuopin.frame.ui.test.view
 
 import com.benjamin.base.mvp.MvpActivity
-import com.benjamin.utils.MacUtils
 import com.benjamin.utils.eighteen.DeviceUtils
-import com.benjamin.utils.eighteen.SystemUtil
 import com.kuopin.frame.R
 import com.kuopin.frame.entity.DeviceEntity
 import com.kuopin.frame.ui.test.contract.ITestContract
@@ -15,17 +13,10 @@ import kotlinx.android.synthetic.main.activity_test.*
  * @describe
  * @author  Benjamin
  * @date 2019/3/19  10:37
- * 								 - generate by MvpAutoCodePlus plugin.
+ *
  */
 
 class TestActivity : MvpActivity<ITestContract.Presenter>(), ITestContract.View {
-    override fun getDeviceS(device: DeviceEntity) {
-        Logger.d(device)
-    }
-
-    override fun getDeviceF(msg: String) {
-        Logger.d(msg)
-    }
 
     override fun getPresenter(): ITestContract.Presenter {
         return TestPresenter(this)
@@ -41,5 +32,12 @@ class TestActivity : MvpActivity<ITestContract.Presenter>(), ITestContract.View 
         tv_test2.setOnClickListener { mPresenter.getDeviceWithHost(DeviceUtils.getMacAddress()!!) }
     }
 
+    override fun getDeviceS(device: DeviceEntity) {
+        Logger.d(device)
+    }
+
+    override fun getDeviceF(msg: String) {
+        Logger.d(msg)
+    }
 }
 

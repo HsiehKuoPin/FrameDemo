@@ -11,7 +11,7 @@ import com.kuopin.frame.ui.test.model.TestModel
  * @describe
  * @author  Benjamin
  * @date 2019/3/19  10:37
- * 								 - generate by MvpAutoCodePlus plugin.
+ *
  */
 
 class TestPresenter(view: ITestContract.View?) : BasePresenter<ITestContract.View, ITestContract.Model>(view),
