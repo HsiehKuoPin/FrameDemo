@@ -37,7 +37,8 @@ class TestActivity : MvpActivity<ITestContract.Presenter>(), ITestContract.View 
 
     override fun initView() {
         super.initView()
-        tv_test.setOnClickListener { mPresenter.getDevice(DeviceUtils.getMacAddress()) }
+        tv_test1.setOnClickListener { mPresenter.getDevice(DeviceUtils.getMacAddress()!!) }
+        tv_test2.setOnClickListener { mPresenter.getDeviceWithHost(DeviceUtils.getMacAddress()!!) }
     }
 
 }

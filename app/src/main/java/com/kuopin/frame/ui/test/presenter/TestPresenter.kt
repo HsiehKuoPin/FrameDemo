@@ -34,5 +34,19 @@ class TestPresenter(view: ITestContract.View?) : BasePresenter<ITestContract.Vie
             )
             .addTo(this)
     }
+
+    override fun getDeviceWithHost(macAddress: String) {
+        mModel.getDeviceWithHost(macAddress)
+            .io2main()
+            .subscribeByHandle(
+                onSuccess = {
+                    mView?.getDeviceS(it)
+                },
+                onFailure = {
+                    mView?.getDeviceF(it.exMessage)
+                }
+            )
+            .addTo(this)
+    }
 }
 

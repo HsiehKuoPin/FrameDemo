@@ -19,9 +19,11 @@ interface ITestContract {
 
     interface Presenter : IPresenter {
         fun getDevice(macAddress: String)
+        fun getDeviceWithHost(macAddress: String)
     }
 
     interface Model : IModel {
         fun getDevice(macAddress: String): Observable<DeviceEntity>
+        fun getDeviceWithHost(macAddress: String): Observable<DeviceEntity>
     }
 }

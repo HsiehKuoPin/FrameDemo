@@ -13,8 +13,12 @@ import io.reactivex.Observable
  */
 
 class TestModel : ITestContract.Model {
+    override fun getDeviceWithHost(macAddress: String): Observable<DeviceEntity> {
+        return NetProvider.getInstance("http://apigw.jizhigou.smartconns.com:9999/").getDevice(macAddress)
+    }
+
     override fun getDevice(macAddress: String): Observable<DeviceEntity> {
-        return NetProvider.getInstance().getDevice(macAddress)
+        return NetProvider.instance.getDevice(macAddress)
     }
 }
 
