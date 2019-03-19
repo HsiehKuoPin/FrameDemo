@@ -1,7 +1,8 @@
-package com.kuopin.frame
+package com.kuopin.frame.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.kuopin.frame.R
 
 class MainActivity : AppCompatActivity() {
 
