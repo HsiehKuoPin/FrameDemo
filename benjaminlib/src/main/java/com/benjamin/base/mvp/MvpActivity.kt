@@ -2,8 +2,8 @@ package com.benjamin.base.mvp
 
 import com.benjamin.R
 import com.benjamin.base.BaseActivity
-import com.benjamin.base.mvp.BaseContract.BasePresenter
-import com.benjamin.base.mvp.BaseContract.BaseView
+import com.benjamin.base.mvp.IContract.IPresenter
+import com.benjamin.base.mvp.IContract.IView
 import com.benjamin.widget.OnTitleBarViewListener
 import com.benjamin.widget.TitleBarView
 
@@ -11,21 +11,16 @@ import com.benjamin.widget.TitleBarView
  * @author  Ben
  * @date 2019/1/17
  */
-abstract class MvpActivity<P : BasePresenter> : BaseActivity(), OnTitleBarViewListener, BaseView {
+abstract class MvpActivity<P : IPresenter> : BaseActivity(), OnTitleBarViewListener, IView {
     protected val titleBarView by bindViewNullable<TitleBarView>(R.id.app_tool_bar)
-    protected var mPresenter: P? = null
+    protected var mPresenter = getPresenter()
 
     override fun initView() {
         super.initView()
         titleBarView?.setOnTitleBarViewListener(this)
     }
 
-    override fun initData() {
-        super.initData()
-        mPresenter = getPresenter() as P
-    }
-
-    abstract fun getPresenter(): BasePresenter?
+    abstract fun getPresenter(): P
 
     override fun onBackClick() {
         finish()
@@ -35,8 +30,8 @@ abstract class MvpActivity<P : BasePresenter> : BaseActivity(), OnTitleBarViewLi
     }
 
     override fun onDestroy() {
+        mPresenter.onDestroy()
         super.onDestroy()
-        mPresenter?.onDestroy()
     }
 
 }

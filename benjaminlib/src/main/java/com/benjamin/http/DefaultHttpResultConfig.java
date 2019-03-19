@@ -4,7 +4,7 @@ package com.benjamin.http;
  * @author Ben
  * @date 2019/1/2
  */
-public class DefaultHttpResultConfig implements HttpResultConfig{
+public class DefaultHttpResultConfig implements IHttpResultConfig {
 
     @Override
     public String getCodeName() {

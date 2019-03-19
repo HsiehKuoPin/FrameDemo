@@ -1,6 +1,6 @@
 package com.benjamin.http;
 
-public interface HttpResultConfig {
+public interface IHttpResultConfig {
 
     String getCodeName();
 

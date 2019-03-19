@@ -1,26 +1,9 @@
 package com.benjamin.http;
 
 import android.util.Log;
-
 import com.benjamin.http.Interceptor.LogRequestInterceptor;
 import com.benjamin.http.Interceptor.LogResponseInterceptor;
 import com.benjamin.http.gson.GsonConverterFactory;
-
-import java.net.Proxy;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 import okhttp3.OkHttpClient;
 import okhttp3.OkHttpClient.Builder;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,6 +11,15 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 import okhttp3.logging.HttpLoggingInterceptor.Logger;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import javax.net.ssl.*;
+import java.net.Proxy;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class RetrofitManager {
     private final String TAG = "RetrofitManager";
@@ -68,7 +60,8 @@ public class RetrofitManager {
 //            }
             if (httpConfig.isOpenLogger()) {
                 builder.addInterceptor(new LogResponseInterceptor());
-                builder.addNetworkInterceptor(new LogRequestInterceptor());
+//                builder.addNetworkInterceptor(new LogRequestInterceptor());
+                builder.addInterceptor(new LogRequestInterceptor());
 //                builder.addInterceptor(this.getHttpLoggingInterceptor());
             }
             builder.sslSocketFactory(createSSLSocketFactory(), new TrustAllCerts());

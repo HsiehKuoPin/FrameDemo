@@ -6,7 +6,7 @@ public class HttpConfig {
     private int DEFAULT_TIMEOUT = 20;
     private String baseUrl;
     private int timeOut = DEFAULT_TIMEOUT;
-    private HttpResultConfig resultConfig;
+    private IHttpResultConfig resultConfig;
     private boolean allowProxy = true;
     private boolean openLogger = true;
     private AccessTokenProvider tokenProvider;
@@ -43,11 +43,11 @@ public class HttpConfig {
         this.allowProxy = allowProxy;
     }
 
-    public HttpResultConfig getResultConfig() {
+    public IHttpResultConfig getResultConfig() {
         return resultConfig;
     }
 
-    public void setResultConfig(HttpResultConfig resultConfig) {
+    public void setResultConfig(IHttpResultConfig resultConfig) {
         this.resultConfig = resultConfig;
     }
 

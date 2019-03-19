@@ -3,7 +3,13 @@ package com.benjamin.base.mvp
 import com.benjamin.http.RxManager
 
 
-open class BasePresenter<V : BaseContract.BaseView>(var mView: V?) : BaseContract.BasePresenter, RxManager() {
+abstract class BasePresenter<V : IContract.IView, M : IContract.IModel>(var mView: V?) : IContract.IPresenter, RxManager() {
+
+    var mModel = onCreateModel()
+
+
+    abstract fun onCreateModel(): M
+
 
     override fun onDestroy() {
         dispose()

@@ -1,6 +1,6 @@
 package com.benjamin.http.gson;
 
-import com.benjamin.http.HttpResultConfig;
+import com.benjamin.http.IHttpResultConfig;
 import com.benjamin.http.exception.HttpException;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -26,9 +26,9 @@ final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
         private static final Charset UTF_8 = Charset.forName("UTF-8");
         private final Gson gson;
         private final TypeAdapter<T> adapter;
-        private final HttpResultConfig resultConfig;
+        private final IHttpResultConfig resultConfig;
 
-        GsonResponseBodyConverter(Gson gson, Type type, HttpResultConfig resultConfig) {
+        GsonResponseBodyConverter(Gson gson, Type type, IHttpResultConfig resultConfig) {
             this.gson = gson;
             this.adapter = (TypeAdapter<T>) gson.getAdapter(TypeToken.get(type));
             this.resultConfig = resultConfig;
@@ -58,7 +58,7 @@ final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             }
         }
 
-        private void handleHttpCodeWithException(String result, HttpResultConfig resultConfig) {
+        private void handleHttpCodeWithException(String result, IHttpResultConfig resultConfig) {
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 int resultCode = jsonObject.getInt(resultConfig.getCodeName());

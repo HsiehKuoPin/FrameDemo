@@ -1,7 +1,7 @@
 package com.benjamin.http.gson;
 
 import com.benjamin.http.DefaultHttpResultConfig;
-import com.benjamin.http.HttpResultConfig;
+import com.benjamin.http.IHttpResultConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -24,7 +24,7 @@ public final class GsonConverterFactory extends Converter.Factory {
      * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
-    public static GsonConverterFactory create(HttpResultConfig resultConfig) {
+    public static GsonConverterFactory create(IHttpResultConfig resultConfig) {
         return create(new GsonBuilder(), resultConfig);
     }
 
@@ -33,7 +33,7 @@ public final class GsonConverterFactory extends Converter.Factory {
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
     @SuppressWarnings("ConstantConditions") // Guarding public API nullability.
-    public static GsonConverterFactory create(GsonBuilder gsonBuilder, HttpResultConfig resultConfig) {
+    public static GsonConverterFactory create(GsonBuilder gsonBuilder, IHttpResultConfig resultConfig) {
         if (gsonBuilder == null) {
             gsonBuilder = new GsonBuilder();
         }
@@ -47,9 +47,9 @@ public final class GsonConverterFactory extends Converter.Factory {
 
     private final Gson dataParseGson;
 
-    private final HttpResultConfig resultConfig;
+    private final IHttpResultConfig resultConfig;
 
-    private GsonConverterFactory(GsonBuilder gsonBuilder, HttpResultConfig resultConfig) {
+    private GsonConverterFactory(GsonBuilder gsonBuilder, IHttpResultConfig resultConfig) {
         this.gson = gsonBuilder.create();
         this.dataParseGson = gsonBuilder.registerTypeAdapterFactory(new ItemTypeAdapterFactory(resultConfig.getDataName())).create();
         this.resultConfig = resultConfig;

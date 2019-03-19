@@ -1,6 +1,6 @@
 package com.benjamin.utils.extension
 
-import com.benjamin.base.mvp.BaseContract.BaseView
+import com.benjamin.base.mvp.IContract.IView
 import com.benjamin.http.ErrorHandleDisposableObserver
 import com.benjamin.http.RxManager
 import com.benjamin.http.exception.HttpException
@@ -22,15 +22,19 @@ fun <T> Observable<T>.io2main(): Observable<T> {
     return compose { upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(mainThread()) }
 }
 
-fun <T> Observable<T>.subscribeByHandle(view: BaseView? = null, onSuccess: (data: T) -> Unit): Disposable {
+//fun <T> Observable<T>.io2main(): ObservableTransformer<T, T> {
+//    return ObservableTransformer { upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(mainThread()) }
+//}
+
+fun <T> Observable<T>.subscribeByHandle(view: IView? = null, onSuccess: (data: T) -> Unit): Disposable {
     return subscribeByHandle(view,onSuccess, {})
 }
 
-fun <T> Observable<T>.subscribeByHandle(view: BaseView? = null, onSuccess: (data: T) -> Unit, onFailure: (e: HttpException) -> Unit): Disposable {
+fun <T> Observable<T>.subscribeByHandle(view: IView? = null, onSuccess: (data: T) -> Unit, onFailure: (e: HttpException) -> Unit): Disposable {
     return subscribeWithErrorHandle(view,onSuccess, onFailure)
 }
 
-//private fun <T> Observable<T>.subscribe(view: BaseView?,onSuccess: (data: T) -> Unit, onFailure: (e: HttpException) -> Unit) {
+//private fun <T> Observable<T>.subscribe(view: IView?,onSuccess: (data: T) -> Unit, onFailure: (e: HttpException) -> Unit) {
 //    return subscribe(object : ErrorHandleObserver<T>() {
 //        override fun onSuccess(t: T) {
 //            onSuccess.invoke(t)
@@ -43,7 +47,7 @@ fun <T> Observable<T>.subscribeByHandle(view: BaseView? = null, onSuccess: (data
 //
 //    })
 //}
-private fun <T> Observable<T>.subscribeWithErrorHandle(view: BaseView?,onSuccess: (data: T) -> Unit, onFailure: (e: HttpException) -> Unit): Disposable {
+private fun <T> Observable<T>.subscribeWithErrorHandle(view: IView?, onSuccess: (data: T) -> Unit, onFailure: (e: HttpException) -> Unit): Disposable {
     return subscribeWith(object : ErrorHandleDisposableObserver<T>() {
         override fun onSuccess(t: T) {
             onSuccess.invoke(t)
@@ -58,15 +62,15 @@ private fun <T> Observable<T>.subscribeWithErrorHandle(view: BaseView?,onSuccess
 }
 
 
-fun <T> Observable<T>.subscribeBy(view: BaseView? = null, onSuccess: (data: T) -> Unit): Disposable {
+fun <T> Observable<T>.subscribeBy(view: IView? = null, onSuccess: (data: T) -> Unit): Disposable {
     return subscribeWith(view,onSuccess, {})
 }
 
-fun <T> Observable<T>.subscribeBy(view: BaseView? = null, onSuccess: (data: T) -> Unit, onFailure: (e: Throwable) -> Unit): Disposable {
+fun <T> Observable<T>.subscribeBy(view: IView? = null, onSuccess: (data: T) -> Unit, onFailure: (e: Throwable) -> Unit): Disposable {
     return subscribeWith(view,onSuccess, onFailure)
 }
 
-private fun <T> Observable<T>.subscribeWith(view: BaseView?,onSuccess: (data: T) -> Unit, onFailure: (e: Throwable) -> Unit): Disposable {
+private fun <T> Observable<T>.subscribeWith(view: IView?, onSuccess: (data: T) -> Unit, onFailure: (e: Throwable) -> Unit): Disposable {
     return subscribeWith(object : DisposableObserver<T>() {
         override fun onComplete() {
         }
