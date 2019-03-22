@@ -1,9 +1,5 @@
 package com.benjamin.http.exception;
 
-/**
- * @author Simon
- * @date 2017/10/20
- */
 
 public class HttpResultCode {
 
