@@ -1,6 +1,8 @@
 package com.kuopin.frame.ui.test.view
 
+import android.os.SystemClock
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import com.benjamin.base.mvp.MvpActivity
 import com.benjamin.utils.eighteen.DeviceUtils
 import com.kuopin.frame.R
@@ -37,8 +39,9 @@ class TestActivity : MvpActivity<ITestContract.Presenter>(), ITestContract.View 
         tv_test1.setOnClickListener { mPresenter.getDevice(DeviceUtils.getMacAddress()!!) }
 //        tv_test2.setOnClickListener { mPresenter.getDeviceWithHost(DeviceUtils.getMacAddress()!!) }
         tv_test2.setOnClickListener {
-            for (i in 1..2) {
+            for (i in 1..5) {
                 dataList.add(MySection(true, "groupName$i"))
+                dataList.add(MySection(TestEntity("item$i", "groupName$i")))
                 dataList.add(MySection(TestEntity("item$i", "groupName$i")))
                 dataList.add(MySection(TestEntity("item$i", "groupName$i")))
                 dataList.add(MySection(TestEntity("item$i", "groupName$i")))
@@ -47,6 +50,20 @@ class TestActivity : MvpActivity<ITestContract.Presenter>(), ITestContract.View 
             sectionAdapter.setNewData(dataList)
 
         }
+        tv_test2.performClick()
+        rv_section.addOnScrollListener(object : RecyclerViewScrollListener(){
+            override fun onScrollToBottom() {
+                super.onScrollToBottom()
+                tv_more.visibility = View.VISIBLE
+                Thread{
+                    SystemClock.sleep(1000)
+                    runOnUiThread {
+                        tv_more.visibility = View.GONE
+                        sectionAdapter.addData(MySection(TestEntity("itemMore", "")))
+                    }
+                }.start()
+            }
+        })
 
     }
 
