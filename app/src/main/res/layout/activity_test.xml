@@ -2,9 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#FFF3F3F3"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFF3F3F3">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_section"
@@ -37,12 +37,135 @@
         android:id="@+id/tv_more"
         android:layout_width="match_parent"
         android:layout_height="98dp"
+        android:background="#aaffffff"
         android:gravity="center"
         android:text="加载中…"
         android:textColor="#FF979797"
-        android:background="#aaffffff"
         android:textSize="30sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#aacf7a7a"
+        android:gravity="center"
+        android:text="banner…"
+        android:textColor="#FF979797"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:background="#aacf7a7a"
+        android:gravity="center"
+        android:text="按钮1"
+        android:textColor="#FF979797"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:background="#aa4d2121"
+        android:gravity="center"
+        android:text="按钮2"
+        android:textColor="#FF979797"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv3"
+        app:layout_constraintStart_toEndOf="@id/tv1" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:background="#aa2d6445"
+        android:gravity="center"
+        android:text="按钮3"
+        android:textColor="#FF979797"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv2" />
+
+    <android.support.constraint.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="tv2,tv3"/>
+
+    <!--水平居中-->
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="按钮1"
+        app:layout_constraintEnd_toStartOf="@id/gl_center"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="按钮2"
+        app:layout_constraintStart_toEndOf="@id/gl_center"/>
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名:"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleText"/>
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="联系方式:  "
+        app:layout_constraintBottom_toBottomOf="@id/tvContentText"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"/>
+
+    <EditText
+        android:id="@+id/tvTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="张三"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/barrier2"/>
+
+    <EditText
+        android:id="@+id/tvContentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="xxxxxxxxxxxxxxx"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/barrier2"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleText"/>
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="right"
+        app:constraint_referenced_ids="tv_name,tv_phone"/>
 </android.support.constraint.ConstraintLayout>

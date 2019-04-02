@@ -1,13 +1,18 @@
 package com.kuopin.frame.ui
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
+import android.content.Context
+import com.benjamin.base.BaseActivity
+import com.benjamin.utils.eighteen.ActivityUtils
 import com.kuopin.frame.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+    override fun getLayoutId(): Int {
+        return R.layout.activity_main
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    companion object {
+        fun start(context: Context) {
+            ActivityUtils.launchActivity(context, MainActivity::class.java)
+        }
     }
 }

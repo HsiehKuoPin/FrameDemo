@@ -4,10 +4,10 @@ import android.os.SystemClock
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.benjamin.base.mvp.MvpActivity
-import com.benjamin.utils.eighteen.DeviceUtils
 import com.kuopin.frame.R
 import com.kuopin.frame.entity.DeviceEntity
 import com.kuopin.frame.entity.TestEntity
+import com.kuopin.frame.ui.MainActivity
 import com.kuopin.frame.ui.test.contract.ITestContract
 import com.kuopin.frame.ui.test.presenter.TestPresenter
 import com.orhanobut.logger.Logger
@@ -36,7 +36,10 @@ class TestActivity : MvpActivity<ITestContract.Presenter>(), ITestContract.View 
         super.initView()
         rv_section.layoutManager = GridLayoutManager(this, 4)
         rv_section.adapter = sectionAdapter
-        tv_test1.setOnClickListener { mPresenter.getDevice(DeviceUtils.getMacAddress()!!) }
+        tv_test1.setOnClickListener {
+//            mPresenter.getDevice(DeviceUtils.getMacAddress()!!)
+            MainActivity.start(this)
+        }
 //        tv_test2.setOnClickListener { mPresenter.getDeviceWithHost(DeviceUtils.getMacAddress()!!) }
         tv_test2.setOnClickListener {
             for (i in 1..5) {
@@ -50,12 +53,12 @@ class TestActivity : MvpActivity<ITestContract.Presenter>(), ITestContract.View 
             sectionAdapter.setNewData(dataList)
 
         }
-        tv_test2.performClick()
-        rv_section.addOnScrollListener(object : RecyclerViewScrollListener(){
+//        tv_test2.performClick()
+        rv_section.addOnScrollListener(object : RecyclerViewScrollListener() {
             override fun onScrollToBottom() {
                 super.onScrollToBottom()
                 tv_more.visibility = View.VISIBLE
-                Thread{
+                Thread {
                     SystemClock.sleep(1000)
                     runOnUiThread {
                         tv_more.visibility = View.GONE
