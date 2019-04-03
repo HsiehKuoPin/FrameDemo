@@ -63,6 +63,42 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * 隐藏View
+     * @param views 视图
+     */
+    fun gone(vararg views: View) {
+        if (views.isNotEmpty()) {
+            for (view in views) {
+                view.visibility = View.GONE
+            }
+        }
+    }
+
+    /**
+     * 显示View 不占位置
+     * @param views 视图
+     */
+    fun visible(vararg views: View) {
+        if (views.isNotEmpty()) {
+            for (view in views) {
+                view.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    /**
+     * 显示View
+     * @param views 视图
+     */
+    fun inVisible(vararg views: View) {
+        if (views.isNotEmpty()) {
+            for (view in views) {
+                view.visibility = View.INVISIBLE
+            }
+        }
+    }
+
     override fun onDestroy() {
         AppManager.getAppManager().finishActivity(this)
         super.onDestroy()
