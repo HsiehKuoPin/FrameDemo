@@ -5,7 +5,6 @@ import com.benjamin.utils.extension.addTo
 import com.benjamin.utils.extension.io2main
 import com.benjamin.utils.extension.subscribeByHandle
 import com.onechat.cat.entity.RequestEntity
-import com.orhanobut.logger.Logger
 
 /**
  * @describe
@@ -26,11 +25,9 @@ class RegisterPresenter : BasePresenter<IRegisterContract.View, IRegisterContrac
                 .subscribeByHandle(
                         onSuccess = {
                             mView?.onRegisterSuccess(it)
-                            Logger.d(it)
                         },
                         onFailure = {
                             mView?.onRegisterFailure(it.exMessage)
-                            Logger.d(it)
                         }
                 )
                 .addTo(this)

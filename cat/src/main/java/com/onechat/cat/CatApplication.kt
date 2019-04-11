@@ -29,7 +29,6 @@ class CatApplication : Application() {
         else "http://apigw.jizhigou.smartconns.com:9999/"
         httpConfig.isOpenLogger = Env.buildType() == Env.DEBUG
         httpConfig.resultConfig = NewHttpResultConfig()
-        httpConfig.timeOut = 10
 //        httpConfig.setTokenProvider { SPUtil.getString(this, "key_token") }
         RetrofitManager.initConfig(httpConfig)
     }

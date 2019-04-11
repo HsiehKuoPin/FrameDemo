@@ -11,6 +11,34 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_animation_from_bottom" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
+        android:orientation="vertical">
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+
+        <include layout="@layout/adapter_test" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
