@@ -13,14 +13,16 @@ import com.benjamin.widget.TitleBarView
  */
 abstract class MvpActivity<P : IPresenter> : BaseActivity(), OnTitleBarViewListener, IView {
     protected val titleBarView by bindViewNullable<TitleBarView>(R.id.app_tool_bar)
-    protected var mPresenter = getPresenter()
+    protected lateinit var mPresenter: P
 
     override fun initView() {
         super.initView()
+        mPresenter = onCreatePresenter()
+        mPresenter.attachView(this)
         titleBarView?.setOnTitleBarViewListener(this)
     }
 
-    abstract fun getPresenter(): P
+    abstract fun onCreatePresenter(): P
 
     override fun onBackClick() {
         finish()
@@ -30,7 +32,8 @@ abstract class MvpActivity<P : IPresenter> : BaseActivity(), OnTitleBarViewListe
     }
 
     override fun onDestroy() {
-        mPresenter.onDestroy()
+        mPresenter.unsubscribe()
+        mPresenter.detachView()
         super.onDestroy()
     }
 

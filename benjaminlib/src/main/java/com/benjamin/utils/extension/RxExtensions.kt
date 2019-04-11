@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
  * @date 2018/12/29
  */
 fun Disposable.addTo(rxManager: RxManager) {
-    rxManager.addObserver(this)
+    rxManager.add(this)
 }
 
 fun <T> Observable<T>.io2main(): Observable<T> {

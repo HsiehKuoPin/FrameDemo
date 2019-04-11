@@ -22,7 +22,7 @@ abstract class MvpFragment<P : IPresenter> : BaseFragment(),IView {
     }
 
     override fun onDestroy() {
-        mPresenter.onDestroy()
+        mPresenter.unsubscribe()
         super.onDestroy()
     }
 

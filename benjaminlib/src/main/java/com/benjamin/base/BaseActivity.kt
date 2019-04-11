@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import com.benjamin.R
-import com.benjamin.app.AppManager
+import com.benjamin.app.AppActivityManager
 import com.benjamin.widget.loading.LoadingV
 import com.benjamin.widget.loading.LoadingVFactory
 
@@ -20,7 +20,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         this.TAG = this.javaClass.name
-        AppManager.getAppManager().addActivity(this)
+        AppActivityManager.appManager.addActivity(this)
 //        AppConfig.init(this)
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
@@ -54,10 +54,6 @@ abstract class BaseActivity : AppCompatActivity() {
             LoadingVFactory().createEmbeddedDefaultLoadingV(loadingLayout)
         }
     }
-
-//    protected open fun embeddedLoadingV(): LoadingV {
-//        return loadingV
-//    }
 
     protected open fun onProgressShowing() {
 
@@ -100,13 +96,9 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        AppManager.getAppManager().finishActivity(this)
+        AppActivityManager.appManager.removeActivity(this)
         super.onDestroy()
     }
-
-//    private fun <T : View> View.bindView(id: Int): Lazy<T> {
-//        return lazy { findViewById<T>(id) }
-//    }
 
     protected fun <V : View> bindView(id: Int): Lazy<V> = lazy { findViewById<V>(id) }
     protected fun <V : View> bindViewNullable(id: Int): Lazy<V?> = lazy { findViewById<V>(id) }

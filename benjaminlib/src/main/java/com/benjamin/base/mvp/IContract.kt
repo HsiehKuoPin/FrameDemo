@@ -6,7 +6,9 @@ package com.benjamin.base.mvp
  */
 interface IContract {
     interface IPresenter {
-        fun onDestroy()
+        fun attachView(view: IView)
+        fun detachView()
+        fun unsubscribe()
     }
 
     interface IView {

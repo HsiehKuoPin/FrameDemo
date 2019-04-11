@@ -1,1 +1,1 @@
-include ':app', 'benjaminlib'
+include ':app', ':cat', 'benjaminlib'

@@ -11,17 +11,13 @@ import io.reactivex.disposables.Disposable
 open class RxManager {
     private var compositeDisposable:CompositeDisposable? = null
 
-    /**
-     * 添加observer
-     * @param observer
-     */
-    fun addObserver(observer: Disposable) {
+    fun add(disposable: Disposable) {
         synchronized(this) {
             if (compositeDisposable == null) {
                 compositeDisposable = CompositeDisposable()
             }
         }
-        compositeDisposable?.add(observer)
+        compositeDisposable?.add(disposable)
     }
 
     fun dispose() {
