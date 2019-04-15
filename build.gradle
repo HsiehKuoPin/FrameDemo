@@ -21,6 +21,12 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
     }
+
+//    tasks.withType(JavaCompile) {
+//        options.encoding = "UTF-8"//设置全局编码
+//        sourceCompatibility = JavaVersion.VERSION_1_8//设置全局编译器的版本
+//        targetCompatibility = JavaVersion.VERSION_1_8
+//    }
 }
 
 task clean(type: Delete) {
