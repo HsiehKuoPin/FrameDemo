@@ -20,7 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.register.RegisterActivity" />
-        <activity android:name=".ui.test.TestActivity"></activity>
+        <activity android:name=".ui.test.TestActivity" />
+        <activity android:name=".ui.test.BannerActivity"></activity>
+        <activity android:name=".ui.test.TBannerActivity"></activity>
     </application>
 
 </manifest>

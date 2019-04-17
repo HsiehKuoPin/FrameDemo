@@ -1,14 +1,17 @@
 package com.onechat.cat
 
 import android.app.Application
+import android.content.Context
 import com.benjamin.http.HttpConfig
 import com.benjamin.http.RetrofitManager
 import com.benjamin.utils.eighteen.UtilsInitializer
+import com.danikula.videocache.HttpProxyCacheServer
 import com.onechat.cat.net.NewHttpResultConfig
 import com.onechat.cat.utils.Env
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+
 
 /**
  * @author  Ben
@@ -47,5 +50,26 @@ class CatApplication : Application() {
             }
         })
 //        Logger.addLogAdapter(DiskLogAdapter())
+    }
+
+    private var proxy: HttpProxyCacheServer? = null
+
+    private fun newProxy(): HttpProxyCacheServer {
+        return HttpProxyCacheServer.Builder(this)
+            .maxCacheSize(1024 * 1024 * 1024)
+//            .maxCacheFilesCount(20)
+            .fileNameGenerator(MyFileNameGenerator())
+            .build()
+    }
+
+    companion object {
+
+        fun getProxy(context: Context): HttpProxyCacheServer {
+            val app = context.applicationContext as CatApplication
+            if (app.proxy == null) {
+                app.proxy = app.newProxy()
+            }
+            return app.proxy!!
+        }
     }
 }
