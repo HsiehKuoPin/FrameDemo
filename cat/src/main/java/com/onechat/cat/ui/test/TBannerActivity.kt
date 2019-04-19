@@ -33,7 +33,7 @@ class TBannerActivity : BaseActivity() {
             TestActivity.start(this)
         }
 //        banner.isAutoPlay(false)
-        banner.setDelayTime(2000)
+        banner.setDelayTime(5000)
         banner.setImageLoader(BannerImageLoader())
         banner.setIndicatorGravity(BannerConfig.CENTER)
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
@@ -42,13 +42,14 @@ class TBannerActivity : BaseActivity() {
     private val dataList = mutableListOf<String>()
     override fun initData() {
         super.initData()
-        dataList.add(url1)
-        dataList.add("http://apigw.testv20.smartconns.com:9999/media/static/image/5c0f775c624d470001fd0ede")
-        dataList.add(url)
-        dataList.add(url1)
         dataList.add("http://apigw.testv20.smartconns.com:9999/media/static/image/5caf04fd624d4700013aa837")
         dataList.add(url1)
         dataList.add("http://apigw.testv20.smartconns.com:9999/media/static/image/5c0f775c624d470001fd0ede")
+        dataList.add(url)
+//        dataList.add(url1)
+//        dataList.add("http://apigw.testv20.smartconns.com:9999/media/static/image/5caf04fd624d4700013aa837")
+//        dataList.add(url1)
+//        dataList.add("http://apigw.testv20.smartconns.com:9999/media/static/image/5c0f775c624d470001fd0ede")
         banner.setImages(dataList)
         banner.isAutoPlay(true)
         banner.start()
@@ -57,14 +58,14 @@ class TBannerActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         StatusBarUtil.hideStatusNavigationBar(this.window)
-//        banner.isAutoPlay(true)
-//        banner.startAutoPlay()
+        banner.isAutoPlay(true)
+        banner.reStartAutoPlay()
     }
 
     override fun onPause() {
         super.onPause()
-//        banner.isAutoPlay(false)
-//        banner.stopAutoPlay()
+        banner.isAutoPlay(false)
+        banner.stopAutoPlay()
     }
 
     override fun onDestroy() {

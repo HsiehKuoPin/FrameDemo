@@ -16,6 +16,7 @@ import android.widget.ImageView.ScaleType;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.onechat.cat.CatApplication;
 import com.onechat.cat.R;
+import com.onechat.cat.widget.SurfaceVideoView;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.BannerScroller;
 import com.youth.banner.WeakHandler;
@@ -352,28 +353,31 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
                 final String proxyUrl = proxy.getProxyUrl((String) url);
                 Log.d(tag, "Use proxy url： " + proxyUrl + "instead of original url： " + url);
 
-                final VideoView videoView = new VideoView(context);
+                final SurfaceVideoView videoView = new SurfaceVideoView(context);
 //                if (proxy.isCached((String) url)){
 //                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
 //                    mmr.setDataSource(context, Uri.parse(proxyUrl));
 //                    Bitmap bitmap = mmr.getFrameAtTime();//获取第一帧图片
 //                    mmr.release();//释放资源
 //                }
-
                 videoView.setVideoPath(proxyUrl);
-                videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                final int finalI = i;
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
-                    public boolean onError(MediaPlayer mp, int what, int extra) {
-                        videoView.stopPlayback();//播放异常，则停止播放，防止弹窗使界面阻塞
-                        Log.e(tag, "播放异常");
-                        startAutoPlay();
-                        return true;
+                    public void onPrepared(MediaPlayer mp) {
+                        if (finalI != 0 && finalI != count + 1 && finalI == currentItem) videoView.start();
                     }
                 });
+//                vvCartEmpty.setOnPreparedListener { mediaPlayer ->
+//                        vvCartEmpty.start()
+//                    if (emptyViewPlace.visibility == View.VISIBLE) {
+//                        view.postDelayed({ emptyViewPlace.visibility = View.GONE }, 500)
+//                    }
+//                }
                 videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        videoView.setVideoPath(proxyUrl);
+//                        videoView.setVideoPath(proxyUrl);
                         isAutoPlay(true);
                         handler.post(task);
 //                        startAutoPlay();
@@ -484,6 +488,9 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         viewPager.setCurrentItem(1);
     }
 
+    public void reStartAutoPlay() {
+        viewPager.setCurrentItem(currentItem);
+    }
 
     public void startAutoPlay() {
         handler.removeCallbacks(task);
@@ -621,10 +628,10 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         currentItem = position;
         View curView = imageViews.get(position);
         if (position != 0 && position != count + 1) {
-            if (curView instanceof VideoView) {
+            if (curView instanceof SurfaceVideoView) {
                 isAutoPlay(false);
                 stopAutoPlay();
-                ((VideoView) curView).start();
+                ((SurfaceVideoView) curView).start();
             } else if (!isAutoPlay) {
                 isAutoPlay(true);
                 startAutoPlay();
@@ -632,8 +639,8 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         }
         for (int i = 0; i < imageViews.size(); i++) {
             View view = imageViews.get(i);
-            if (i != position && view instanceof VideoView && ((VideoView) view).isPlaying()) {
-                ((VideoView) view).pause();
+            if (i != position && view instanceof SurfaceVideoView && ((SurfaceVideoView) view).isPlaying()) {
+                ((SurfaceVideoView) view).pauseClearDelayed();
             }
         }
         if (mOnPageChangeListener != null) {
