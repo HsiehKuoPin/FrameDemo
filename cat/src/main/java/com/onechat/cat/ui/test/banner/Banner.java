@@ -13,7 +13,6 @@ import android.view.*;
 import android.webkit.MimeTypeMap;
 import android.widget.*;
 import android.widget.ImageView.ScaleType;
-import com.danikula.videocache.CacheListener;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.onechat.cat.CatApplication;
 import com.onechat.cat.R;
@@ -25,7 +24,6 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoaderInterface;
 import com.youth.banner.view.BannerViewPager;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ import java.util.List;
 import static android.support.v4.view.ViewPager.OnPageChangeListener;
 import static android.support.v4.view.ViewPager.PageTransformer;
 
-public class Banner extends FrameLayout implements OnPageChangeListener, CacheListener {
+public class Banner extends FrameLayout implements OnPageChangeListener {
     public String tag = "banner";
     private int mIndicatorMargin = BannerConfig.PADDING_SIZE;
     private int mIndicatorWidth;
@@ -352,16 +350,17 @@ public class Banner extends FrameLayout implements OnPageChangeListener, CacheLi
             if (MimeTypeMap.getFileExtensionFromUrl(String.valueOf(url)).equals("mp4")) {
                 HttpProxyCacheServer proxy = CatApplication.Companion.getProxy(context);
                 final String proxyUrl = proxy.getProxyUrl((String) url);
-                proxy.registerCacheListener(this,proxyUrl);
                 Log.d(tag, "Use proxy url： " + proxyUrl + "instead of original url： " + url);
-                final VideoView videoView = new VideoView(context);
-                videoView.setVideoPath(proxyUrl);
-                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
 
-                    }
-                });
+                final VideoView videoView = new VideoView(context);
+//                if (proxy.isCached((String) url)){
+//                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+//                    mmr.setDataSource(context, Uri.parse(proxyUrl));
+//                    Bitmap bitmap = mmr.getFrameAtTime();//获取第一帧图片
+//                    mmr.release();//释放资源
+//                }
+
+                videoView.setVideoPath(proxyUrl);
                 videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                     @Override
                     public boolean onError(MediaPlayer mp, int what, int extra) {
@@ -374,17 +373,19 @@ public class Banner extends FrameLayout implements OnPageChangeListener, CacheLi
                 videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        if (count > 1) {
-                            currentItem = currentItem % (count + 1) + 1;
-                            if (currentItem == 1) {
-                                viewPager.setCurrentItem(currentItem, false);
-                            } else {
-                                viewPager.setCurrentItem(currentItem);
-                            }
-                        }
-                        startAutoPlay();
                         videoView.setVideoPath(proxyUrl);
-                        videoView.start();
+                        isAutoPlay(true);
+                        handler.post(task);
+//                        startAutoPlay();
+//                        videoView.start();
+//                        if (count > 1) {
+//                            currentItem = currentItem % (count + 1) + 1;
+//                            if (currentItem == 1) {
+//                                viewPager.setCurrentItem(currentItem, false);
+//                            } else {
+//                                viewPager.setCurrentItem(currentItem+1);
+//                            }
+//                        }
                     }
                 });
                 imageViews.add(videoView);
@@ -470,7 +471,6 @@ public class Banner extends FrameLayout implements OnPageChangeListener, CacheLi
         }
         viewPager.setAdapter(adapter);
         viewPager.setFocusable(true);
-        viewPager.setCurrentItem(1);
         if (gravity != -1)
             indicator.setGravity(gravity);
         if (isScroll && count > 1) {
@@ -480,6 +480,8 @@ public class Banner extends FrameLayout implements OnPageChangeListener, CacheLi
         }
         if (isAutoPlay)
             startAutoPlay();
+
+        viewPager.setCurrentItem(1);
     }
 
 
@@ -535,11 +537,6 @@ public class Banner extends FrameLayout implements OnPageChangeListener, CacheLi
         if (realPosition < 0)
             realPosition += count;
         return realPosition;
-    }
-
-    @Override
-    public void onCacheAvailable(File cacheFile, String url, int percentsAvailable) {
-
     }
 
     class BannerPagerAdapter extends PagerAdapter {
@@ -623,9 +620,15 @@ public class Banner extends FrameLayout implements OnPageChangeListener, CacheLi
     public void onPageSelected(int position) {
         currentItem = position;
         View curView = imageViews.get(position);
-        if ((position != 0 && position != count + 1) && curView instanceof VideoView && !((VideoView) curView).isPlaying()) {
-            ((VideoView) curView).start();
-            stopAutoPlay();
+        if (position != 0 && position != count + 1) {
+            if (curView instanceof VideoView) {
+                isAutoPlay(false);
+                stopAutoPlay();
+                ((VideoView) curView).start();
+            } else if (!isAutoPlay) {
+                isAutoPlay(true);
+                startAutoPlay();
+            }
         }
         for (int i = 0; i < imageViews.size(); i++) {
             View view = imageViews.get(i);
