@@ -32,7 +32,7 @@ class TBannerActivity : BaseActivity() {
 //            banner.start()
             TestActivity.start(this)
         }
-//        banner.isAutoPlay(false)
+        banner.isAutoPlay(false)
         banner.setDelayTime(5000)
         banner.setImageLoader(BannerImageLoader())
         banner.setIndicatorGravity(BannerConfig.CENTER)
@@ -51,7 +51,6 @@ class TBannerActivity : BaseActivity() {
 //        dataList.add(url1)
 //        dataList.add("http://apigw.testv20.smartconns.com:9999/media/static/image/5c0f775c624d470001fd0ede")
         banner.setImages(dataList)
-        banner.isAutoPlay(true)
         banner.start()
     }
 
@@ -59,12 +58,14 @@ class TBannerActivity : BaseActivity() {
         super.onResume()
         StatusBarUtil.hideStatusNavigationBar(this.window)
         banner.isAutoPlay(true)
-        banner.reStartAutoPlay()
+        banner.isUserVisible(true)
+        banner.startAutoPlay()
     }
 
     override fun onPause() {
         super.onPause()
         banner.isAutoPlay(false)
+        banner.isUserVisible(false)
         banner.stopAutoPlay()
     }
 

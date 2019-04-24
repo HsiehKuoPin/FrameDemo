@@ -1,8 +1,11 @@
 package com.onechat.cat.ui.test.banner;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.media.MediaPlayer;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -13,6 +16,10 @@ import android.view.*;
 import android.webkit.MimeTypeMap;
 import android.widget.*;
 import android.widget.ImageView.ScaleType;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.request.RequestOptions;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.onechat.cat.CatApplication;
 import com.onechat.cat.R;
@@ -26,11 +33,13 @@ import com.youth.banner.loader.ImageLoaderInterface;
 import com.youth.banner.view.BannerViewPager;
 
 import java.lang.reflect.Field;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.v4.view.ViewPager.OnPageChangeListener;
 import static android.support.v4.view.ViewPager.PageTransformer;
+import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class Banner extends FrameLayout implements OnPageChangeListener {
     public String tag = "banner";
@@ -74,6 +83,8 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
     private DisplayMetrics dm;
 
     private WeakHandler handler = new WeakHandler();
+    private boolean isUserVisible;
+    private View curView;
 
     public Banner(Context context) {
         this(context, null);
@@ -352,47 +363,34 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
                 HttpProxyCacheServer proxy = CatApplication.Companion.getProxy(context);
                 final String proxyUrl = proxy.getProxyUrl((String) url);
                 Log.d(tag, "Use proxy url： " + proxyUrl + "instead of original url： " + url);
-
+                FrameLayout fl = new FrameLayout(context);
                 final SurfaceVideoView videoView = new SurfaceVideoView(context);
-//                if (proxy.isCached((String) url)){
-//                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-//                    mmr.setDataSource(context, Uri.parse(proxyUrl));
-//                    Bitmap bitmap = mmr.getFrameAtTime();//获取第一帧图片
-//                    mmr.release();//释放资源
-//                }
+                ImageView iv = new ImageView(context);
+//                iv.setScaleType(ScaleType.FIT_XY);
+//                loadVideoScreenshot(context, url.toString(), iv, 1);
+//                iv.setVisibility(VISIBLE);
+                fl.addView(videoView);
+                fl.addView(iv);
                 videoView.setVideoPath(proxyUrl);
                 final int finalI = i;
-                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        if (finalI != 0 && finalI != count + 1 && finalI == currentItem) videoView.start();
+                videoView.setOnPreparedListener(mp -> {
+                    if (finalI != 0 && finalI != count + 1 && finalI == currentItem) {
+                        videoView.start();
+                        if (!isUserVisible) videoView.pause();
+                        if (iv.getVisibility() == VISIBLE)
+                            handler.postDelayed(() -> iv.setVisibility(GONE), 500);
                     }
+
                 });
-//                vvCartEmpty.setOnPreparedListener { mediaPlayer ->
-//                        vvCartEmpty.start()
-//                    if (emptyViewPlace.visibility == View.VISIBLE) {
-//                        view.postDelayed({ emptyViewPlace.visibility = View.GONE }, 500)
-//                    }
-//                }
-                videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-//                        videoView.setVideoPath(proxyUrl);
+                videoView.setOnCompletionListener(mp -> {
+                    if (count > 1) {
                         isAutoPlay(true);
                         handler.post(task);
-//                        startAutoPlay();
-//                        videoView.start();
-//                        if (count > 1) {
-//                            currentItem = currentItem % (count + 1) + 1;
-//                            if (currentItem == 1) {
-//                                viewPager.setCurrentItem(currentItem, false);
-//                            } else {
-//                                viewPager.setCurrentItem(currentItem+1);
-//                            }
-//                        }
+                    } else {
+                        videoView.reOpen();
                     }
                 });
-                imageViews.add(videoView);
+                imageViews.add(fl);
             } else {
                 View imageView = null;
                 if (imageLoader != null) {
@@ -407,6 +405,30 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
                 imageViews.add(imageView);
             }
         }
+    }
+
+    /**
+     * 视频截图
+     */
+    @SuppressLint("CheckResult")
+    public void loadVideoScreenshot(final Context context, String uri, ImageView imageView, long frameTimeMicros) {
+        RequestOptions requestOptions = RequestOptions.frameOf(frameTimeMicros);
+        requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
+        requestOptions.transform(new BitmapTransformation() {
+            @Override
+            protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+                return toTransform;
+            }
+            @Override
+            public void updateDiskCacheKey(MessageDigest messageDigest) {
+                try {
+                    messageDigest.update((context.getPackageName() + "RotateTransform").getBytes("utf-8"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Glide.with(context).load(uri).apply(requestOptions).into(imageView);
     }
 
     private void setScaleType(View imageView) {
@@ -488,17 +510,27 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         viewPager.setCurrentItem(1);
     }
 
-    public void reStartAutoPlay() {
-        viewPager.setCurrentItem(currentItem);
+    public void isUserVisible(boolean isUserVisible) {
+        this.isUserVisible = isUserVisible;
     }
 
     public void startAutoPlay() {
-        handler.removeCallbacks(task);
-        handler.postDelayed(task, delayTime);
+        if (curView instanceof FrameLayout && isUserVisible) {
+            isAutoPlay(false);
+            handler.removeCallbacks(task);
+            ((SurfaceVideoView) ((FrameLayout) curView).getChildAt(0)).start();
+        } else {
+            isAutoPlay(true);
+            handler.removeCallbacks(task);
+            handler.postDelayed(task, delayTime);
+        }
     }
 
     public void stopAutoPlay() {
         handler.removeCallbacks(task);
+        if (curView instanceof FrameLayout){
+            ((SurfaceVideoView) ((FrameLayout) curView).getChildAt(0)).pause();
+        }
     }
 
     private final Runnable task = new Runnable() {
@@ -626,21 +658,20 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
     @Override
     public void onPageSelected(int position) {
         currentItem = position;
-        View curView = imageViews.get(position);
-        if (position != 0 && position != count + 1) {
-            if (curView instanceof SurfaceVideoView) {
+        curView = imageViews.get(position);
+        if (position != 0 && position != count + 1 && isUserVisible) {
+            if (curView instanceof FrameLayout) {
                 isAutoPlay(false);
-                stopAutoPlay();
-                ((SurfaceVideoView) curView).start();
+                handler.removeCallbacks(task);
+                ((SurfaceVideoView) ((FrameLayout) curView).getChildAt(0)).start();
             } else if (!isAutoPlay) {
-                isAutoPlay(true);
                 startAutoPlay();
             }
         }
         for (int i = 0; i < imageViews.size(); i++) {
             View view = imageViews.get(i);
-            if (i != position && view instanceof SurfaceVideoView && ((SurfaceVideoView) view).isPlaying()) {
-                ((SurfaceVideoView) view).pauseClearDelayed();
+            if (i != position && view instanceof FrameLayout) {
+                ((SurfaceVideoView) ((FrameLayout) view).getChildAt(0)).pause();
             }
         }
         if (mOnPageChangeListener != null) {
