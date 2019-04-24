@@ -1,4 +1,4 @@
-package com.onechat.cat.ui.test
+package com.onechat.cat.ui.test.video
 
 import android.os.Bundle
 import android.os.Handler
@@ -139,7 +139,8 @@ class VideoFragment : BaseFragment(), CacheListener {
         private const val KEY_URL = "key_url"
 
         fun newInstance(url: String): VideoFragment {
-            return VideoFragment().apply { arguments = Bundle().apply { putString(KEY_URL, url) } }
+            return VideoFragment()
+                .apply { arguments = Bundle().apply { putString(KEY_URL, url) } }
         }
 
     }

@@ -1,11 +1,12 @@
-package com.onechat.cat.ui.test
+package com.onechat.cat.ui.test.video
 
 import android.content.Context
 import com.benjamin.base.BaseActivity
 import com.benjamin.utils.StatusBarUtil
 import com.benjamin.utils.eighteen.ActivityUtils
 import com.onechat.cat.R
-import com.onechat.cat.ui.test.banner.BannerImageLoader
+import com.onechat.cat.ui.test.TestActivity
+import com.onechat.cat.widget.banner.BannerImageLoader
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.activity_tbanner.*
 

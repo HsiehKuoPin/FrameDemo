@@ -1,4 +1,4 @@
-package com.onechat.cat.ui.test.banner
+package com.onechat.cat.widget.banner
 
 import android.content.Context
 import android.widget.ImageView

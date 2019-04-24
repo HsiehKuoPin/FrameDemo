@@ -1,4 +1,4 @@
-package com.onechat.cat.ui.test;
+package com.onechat.cat.ui.test.video;
 
 import android.content.Context;
 import android.media.MediaPlayer;

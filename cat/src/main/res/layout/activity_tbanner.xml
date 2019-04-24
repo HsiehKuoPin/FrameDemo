@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.onechat.cat.ui.test.banner.Banner
+    <com.onechat.cat.widget.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
