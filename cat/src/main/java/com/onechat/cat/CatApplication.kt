@@ -58,7 +58,7 @@ class CatApplication : Application() {
         return HttpProxyCacheServer.Builder(this)
             .maxCacheSize(1024 * 1024 * 1024)
 //            .maxCacheFilesCount(20)
-            .fileNameGenerator(MyFileNameGenerator())
+            .fileNameGenerator { url -> url.substring(url.lastIndexOf("/") + 1, url.length) }//为缓存的文件提供名称
             .build()
     }
 
