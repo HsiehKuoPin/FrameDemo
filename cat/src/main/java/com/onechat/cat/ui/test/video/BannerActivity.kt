@@ -2,7 +2,7 @@ package com.onechat.cat.ui.test.video
 
 import android.content.Context
 import com.benjamin.base.BaseActivity
-import com.benjamin.utils.StatusBarUtil
+import com.benjamin.utils.extension.StatusBarUtil
 import com.benjamin.utils.eighteen.ActivityUtils
 import com.onechat.cat.R
 

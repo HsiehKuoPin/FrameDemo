@@ -1,4 +1,4 @@
-package com.benjamin.utils
+package com.benjamin.utils.extension
 
 import android.annotation.TargetApi
 import android.app.Activity
@@ -43,7 +43,8 @@ object StatusBarUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            activity.window.statusBarColor = calculateStatusColor(color, statusBarAlpha)
+            activity.window.statusBarColor =
+                calculateStatusColor(color, statusBarAlpha)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             val decorView = activity.window.decorView as ViewGroup
@@ -52,9 +53,20 @@ object StatusBarUtil {
                 if (fakeStatusBarView.visibility == View.GONE) {
                     fakeStatusBarView.visibility = View.VISIBLE
                 }
-                fakeStatusBarView.setBackgroundColor(calculateStatusColor(color, statusBarAlpha))
+                fakeStatusBarView.setBackgroundColor(
+                    calculateStatusColor(
+                        color,
+                        statusBarAlpha
+                    )
+                )
             } else {
-                decorView.addView(createStatusBarView(activity, color, statusBarAlpha))
+                decorView.addView(
+                    createStatusBarView(
+                        activity,
+                        color,
+                        statusBarAlpha
+                    )
+                )
             }
             setRootView(activity)
         }
@@ -77,18 +89,33 @@ object StatusBarUtil {
             if (rootView != null && rootView is CoordinatorLayout) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     rootView.fitsSystemWindows = false
-                    contentView.setBackgroundColor(calculateStatusColor(color, statusBarAlpha))
+                    contentView.setBackgroundColor(
+                        calculateStatusColor(
+                            color,
+                            statusBarAlpha
+                        )
+                    )
                     val isNeedRequestLayout = contentView.paddingTop < statusBarHeight
                     if (isNeedRequestLayout) {
                         contentView.setPadding(0, statusBarHeight, 0, 0)
                         rootView.post { rootView.requestLayout() }
                     }
                 } else {
-                    rootView.setStatusBarBackgroundColor(calculateStatusColor(color, statusBarAlpha))
+                    rootView.setStatusBarBackgroundColor(
+                        calculateStatusColor(
+                            color,
+                            statusBarAlpha
+                        )
+                    )
                 }
             } else {
                 contentView.setPadding(0, statusBarHeight, 0, 0)
-                contentView.setBackgroundColor(calculateStatusColor(color, statusBarAlpha))
+                contentView.setBackgroundColor(
+                    calculateStatusColor(
+                        color,
+                        statusBarAlpha
+                    )
+                )
             }
             setTransparentForWindow(activity)
         }
@@ -216,7 +243,8 @@ object StatusBarUtil {
      */
     @JvmOverloads
     fun setColorForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, @ColorInt color: Int,
-                                statusBarAlpha: Int = DEFAULT_STATUS_BAR_ALPHA) {
+                                statusBarAlpha: Int = DEFAULT_STATUS_BAR_ALPHA
+    ) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return
         }
@@ -242,7 +270,9 @@ object StatusBarUtil {
         // 内容布局不是 LinearLayout 时,设置padding top
         if (contentLayout !is LinearLayout && contentLayout.getChildAt(1) != null) {
             contentLayout.getChildAt(1)
-                    .setPadding(contentLayout.paddingLeft, getStatusBarHeight(activity) + contentLayout.paddingTop,
+                    .setPadding(contentLayout.paddingLeft, getStatusBarHeight(
+                        activity
+                    ) + contentLayout.paddingTop,
                             contentLayout.paddingRight, contentLayout.paddingBottom)
         }
         // 设置属性
@@ -282,14 +312,20 @@ object StatusBarUtil {
                 if (fakeStatusBarView.visibility == View.GONE) {
                     fakeStatusBarView.visibility = View.VISIBLE
                 }
-                fakeStatusBarView.setBackgroundColor(calculateStatusColor(color, DEFAULT_STATUS_BAR_ALPHA))
+                fakeStatusBarView.setBackgroundColor(
+                    calculateStatusColor(
+                        color,
+                        DEFAULT_STATUS_BAR_ALPHA
+                    )
+                )
             } else {
                 // 添加 statusBarView 到布局中
                 contentLayout.addView(createStatusBarView(activity, color), 0)
             }
             // 内容布局不是 LinearLayout 时,设置padding top
             if (contentLayout !is LinearLayout && contentLayout.getChildAt(1) != null) {
-                contentLayout.getChildAt(1).setPadding(0, getStatusBarHeight(activity), 0, 0)
+                contentLayout.getChildAt(1).setPadding(0,
+                    getStatusBarHeight(activity), 0, 0)
             }
             // 设置属性
             setDrawerLayoutProperty(drawerLayout, contentLayout)
@@ -332,7 +368,8 @@ object StatusBarUtil {
         val contentLayout = drawerLayout.getChildAt(0) as ViewGroup
         // 内容布局不是 LinearLayout 时,设置padding top
         if (contentLayout !is LinearLayout && contentLayout.getChildAt(1) != null) {
-            contentLayout.getChildAt(1).setPadding(0, getStatusBarHeight(activity), 0, 0)
+            contentLayout.getChildAt(1).setPadding(0,
+                getStatusBarHeight(activity), 0, 0)
         }
 
         // 设置属性
@@ -379,7 +416,11 @@ object StatusBarUtil {
      * @param needOffsetView 需要向下偏移的 ICategoryView
      */
     fun setTranslucentForImageView(activity: Activity, needOffsetView: View) {
-        setTranslucentForImageView(activity, DEFAULT_STATUS_BAR_ALPHA, needOffsetView)
+        setTranslucentForImageView(
+            activity,
+            DEFAULT_STATUS_BAR_ALPHA,
+            needOffsetView
+        )
     }
 
     /**
@@ -401,7 +442,9 @@ object StatusBarUtil {
                 return
             }
             val layoutParams = needOffsetView.layoutParams as ViewGroup.MarginLayoutParams
-            layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + getStatusBarHeight(activity),
+            layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + getStatusBarHeight(
+                activity
+            ),
                     layoutParams.rightMargin, layoutParams.bottomMargin)
             needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, true)
         }
@@ -414,7 +457,11 @@ object StatusBarUtil {
      * @param needOffsetView 需要向下偏移的 ICategoryView
      */
     fun setTranslucentForImageViewInFragment(activity: Activity, needOffsetView: View) {
-        setTranslucentForImageViewInFragment(activity, DEFAULT_STATUS_BAR_ALPHA, needOffsetView)
+        setTranslucentForImageViewInFragment(
+            activity,
+            DEFAULT_STATUS_BAR_ALPHA,
+            needOffsetView
+        )
     }
 
     /**
@@ -501,7 +548,12 @@ object StatusBarUtil {
             }
             fakeTranslucentView.setBackgroundColor(Color.argb(statusBarAlpha, 0, 0, 0))
         } else {
-            contentView.addView(createTranslucentStatusBarView(activity, statusBarAlpha))
+            contentView.addView(
+                createTranslucentStatusBarView(
+                    activity,
+                    statusBarAlpha
+                )
+            )
         }
     }
 
@@ -516,7 +568,9 @@ object StatusBarUtil {
     private fun createStatusBarView(activity: Activity, @ColorInt color: Int, alpha: Int = 0): View {
         // 绘制一个和状态栏一样高的矩形
         val statusBarView = View(activity)
-        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity))
+        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            getStatusBarHeight(activity)
+        )
         statusBarView.layoutParams = params
         statusBarView.setBackgroundColor(calculateStatusColor(color, alpha))
         statusBarView.id = FAKE_STATUS_BAR_VIEW_ID
@@ -578,7 +632,9 @@ object StatusBarUtil {
     private fun createTranslucentStatusBarView(activity: Activity, alpha: Int): View {
         // 绘制一个和状态栏一样高的矩形
         val statusBarView = View(activity)
-        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity))
+        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            getStatusBarHeight(activity)
+        )
         statusBarView.layoutParams = params
         statusBarView.setBackgroundColor(Color.argb(alpha, 0, 0, 0))
         statusBarView.id = FAKE_TRANSLUCENT_VIEW_ID

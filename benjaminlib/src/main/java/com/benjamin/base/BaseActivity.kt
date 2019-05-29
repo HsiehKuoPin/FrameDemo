@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.benjamin.R
 import com.benjamin.app.AppActivityManager
+import com.benjamin.utils.extension.StatusBarUtil
+import com.benjamin.widget.OnTitleBarViewListener
+import com.benjamin.widget.TitleBarView
 import com.benjamin.widget.loading.LoadingV
 import com.benjamin.widget.loading.LoadingVFactory
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), OnTitleBarViewListener {
     var TAG = this.javaClass.name
+    protected val titleBarView by bindViewNullable<TitleBarView>(R.id.app_tool_bar)
 
     protected val activity: Activity
         get() = this
@@ -23,10 +27,14 @@ abstract class BaseActivity : AppCompatActivity() {
         AppActivityManager.appManager.addActivity(this)
 //        AppConfig.init(this)
         setContentView(getLayoutId())
+        titleBarView?.setOnTitleBarViewListener(this)
         initView()
         initData()
     }
 
+    override fun onBackClick() {
+        finish()
+    }
     open fun initView() {
     }
 
@@ -98,6 +106,11 @@ abstract class BaseActivity : AppCompatActivity() {
                 view.visibility = View.INVISIBLE
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        StatusBarUtil.hideStatusNavigationBar(this.window)
     }
 
     override fun onDestroy() {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.benjamin.R
+import com.benjamin.utils.extension.StatusBarUtil
 import com.benjamin.widget.loading.LoadingV
 import com.benjamin.widget.loading.LoadingVFactory
 
@@ -32,6 +33,11 @@ abstract class BaseFragment : Fragment(){
     }
 
     open fun initData() {
+    }
+
+    override fun onStart() {
+        super.onStart()
+        StatusBarUtil.hideStatusNavigationBar(activity?.window)
     }
 
     protected open val appLoadingV: LoadingV by lazy { (activity as BaseActivity).appLoadingV}

@@ -9,6 +9,13 @@
         <item name="android:listDivider">@drawable/md_divider</item>
     </style>
 
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="android:textSize">@dimen/sizeFontDefault</item>-->
+        <!--<item name="android:textColor">@color/colorFontDefault</item>-->
+        <!--<item name="android:windowBackground">@color/colorBgApp</item>-->
+        <!--<item name="android:scaleType">centerInside</item>-->
+    <!--</style>-->
 
     <style name="main_tab">
         <item name="android:layout_width">0dp</item>
