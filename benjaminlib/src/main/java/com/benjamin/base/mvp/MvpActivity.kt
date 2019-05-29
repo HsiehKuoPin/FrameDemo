@@ -1,5 +1,6 @@
 package com.benjamin.base.mvp
 
+import android.os.Bundle
 import com.benjamin.R
 import com.benjamin.base.BaseActivity
 import com.benjamin.base.mvp.IContract.IPresenter
@@ -15,11 +16,11 @@ abstract class MvpActivity<P : IPresenter> : BaseActivity(), OnTitleBarViewListe
     protected val titleBarView by bindViewNullable<TitleBarView>(R.id.app_tool_bar)
     protected lateinit var mPresenter: P
 
-    override fun initView() {
-        super.initView()
+    override fun onCreate(savedInstanceState: Bundle?) {
         mPresenter = onCreatePresenter()
         mPresenter.attachView(this)
         titleBarView?.setOnTitleBarViewListener(this)
+        super.onCreate(savedInstanceState)
     }
 
     abstract fun onCreatePresenter(): P

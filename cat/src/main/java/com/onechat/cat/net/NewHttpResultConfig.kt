@@ -8,15 +8,15 @@ import com.benjamin.http.IHttpResultConfig
  */
 class NewHttpResultConfig : IHttpResultConfig {
     override fun getCodeName(): String {
-        return "resultCode"
+        return "errorCode"
     }
 
     override fun getMessageName(): String {
-        return "resultDesc"
+        return "errorMsg"
     }
 
     override fun getDataName(): String {
-        return "content"
+        return "data"
     }
 
     override fun getSuccessCode(): Int {

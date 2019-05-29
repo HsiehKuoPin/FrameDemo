@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.MainActivity">
 
-    <TextView
-            android:id="@+id/tv_hello"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/rg"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dp" />
+
+    <RadioGroup
+        android:id="@+id/rg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_home"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:text="首页" />
+
+        <RadioButton
+            android:id="@+id/rb_category"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:text="分类" />
+
+        <RadioButton
+            android:id="@+id/rb_recommend"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:text="推荐" />
+
+        <RadioButton
+            android:id="@+id/rb_mine"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:text="个人" />
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

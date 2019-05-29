@@ -60,8 +60,8 @@ public class RetrofitManager {
 //            }
             if (httpConfig.isOpenLogger()) {
                 builder.addInterceptor(new LogResponseInterceptor());
-//                builder.addNetworkInterceptor(new LogRequestInterceptor());
-                builder.addInterceptor(new LogRequestInterceptor());
+                builder.addNetworkInterceptor(new LogRequestInterceptor());
+//                builder.addInterceptor(new LogRequestInterceptor());
 //                builder.addInterceptor(this.getHttpLoggingInterceptor());
             }
             builder.sslSocketFactory(createSSLSocketFactory(), new TrustAllCerts());

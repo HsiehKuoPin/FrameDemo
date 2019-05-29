@@ -10,14 +10,13 @@ import com.benjamin.widget.loading.LoadingV
 import com.benjamin.widget.loading.LoadingVFactory
 
 abstract class BaseFragment : Fragment(){
-    protected var TAG = ""
+    protected var TAG = this.javaClass.simpleName
     protected abstract fun getLayoutId(): Int
 
     private var contentView: View? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        this.TAG = this.javaClass.simpleName
 //        return if (getLayoutId() != 0) inflater.inflate(getLayoutId(), container, false)
         contentView = inflater.inflate(getLayoutId(), null)
         return contentView
@@ -35,6 +34,7 @@ abstract class BaseFragment : Fragment(){
     open fun initData() {
     }
 
+    protected open val appLoadingV: LoadingV by lazy { (activity as BaseActivity).appLoadingV}
     protected val loadingV: LoadingV by lazy {
         createLoadingV().apply {
             setOnRefreshingListener {

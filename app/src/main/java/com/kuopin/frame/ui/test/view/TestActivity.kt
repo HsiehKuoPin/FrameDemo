@@ -25,7 +25,7 @@ class TestActivity : MvpActivity<TestPresenter>(), ITestContract.View {
     private val sectionAdapter by lazy { SectionAdapter(R.layout.item_text, R.layout.item_section_content, dataList) }
 
     override fun onCreatePresenter(): TestPresenter{
-        return TestPresenter(this)
+        return TestPresenter()
     }
 
     override fun getLayoutId(): Int {

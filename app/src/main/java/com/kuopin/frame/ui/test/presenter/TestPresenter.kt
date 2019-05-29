@@ -14,7 +14,7 @@ import com.kuopin.frame.ui.test.model.TestModel
  *
  */
 
-class TestPresenter(view: ITestContract.View?) : BasePresenter<ITestContract.View, ITestContract.Model>(view),
+class TestPresenter : BasePresenter<ITestContract.View, ITestContract.Model>(),
     ITestContract.Presenter {
 
     override fun onCreateModel(): ITestContract.Model {

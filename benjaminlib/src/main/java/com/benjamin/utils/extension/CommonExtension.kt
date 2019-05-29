@@ -1,4 +1,4 @@
-package cn.ejiamall.extension
+package com.benjamin.utils.extension
 
 import android.text.Html
 import android.text.Spanned

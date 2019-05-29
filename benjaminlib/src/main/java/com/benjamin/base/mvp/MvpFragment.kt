@@ -1,5 +1,7 @@
 package com.benjamin.base.mvp
 
+import android.os.Bundle
+import android.view.View
 import com.benjamin.base.BaseFragment
 import com.benjamin.base.mvp.IContract.IPresenter
 import com.benjamin.base.mvp.IContract.IView
@@ -9,14 +11,15 @@ import com.benjamin.base.mvp.IContract.IView
  * @date 2019/1/17
  */
 abstract class MvpFragment<P : IPresenter> : BaseFragment(),IView {
-    protected var mPresenter = getPresenter()
+    protected lateinit var mPresenter: P
 
-    override fun initData() {
-        super.initData()
-        mPresenter = getPresenter()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mPresenter = onCreatePresenter()
+        mPresenter.attachView(this)
+        super.onViewCreated(view, savedInstanceState)
     }
 
-    abstract fun getPresenter(): P
+    abstract fun onCreatePresenter(): P
 
     override fun onTokenInvalid() {
     }

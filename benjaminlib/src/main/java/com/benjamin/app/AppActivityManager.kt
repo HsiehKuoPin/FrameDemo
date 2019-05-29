@@ -114,7 +114,7 @@ class AppActivityManager private constructor() {
     /**
      * 退出应用程序
      */
-    fun AppExit(context: Context) {
+    fun appExit(context: Context) {
         //先清除Activity
         finishAllActivity()
         val activityMgr = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager

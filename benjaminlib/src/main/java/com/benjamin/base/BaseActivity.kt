@@ -11,7 +11,7 @@ import com.benjamin.widget.loading.LoadingV
 import com.benjamin.widget.loading.LoadingVFactory
 
 abstract class BaseActivity : AppCompatActivity() {
-    var TAG = ""
+    var TAG = this.javaClass.name
 
     protected val activity: Activity
         get() = this
@@ -19,10 +19,9 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun getLayoutId(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        this.TAG = this.javaClass.name
+        super.onCreate(savedInstanceState)
         AppActivityManager.appManager.addActivity(this)
 //        AppConfig.init(this)
-        super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
         initView()
         initData()
@@ -32,6 +31,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     open fun initData() {
+    }
+
+    open val appLoadingV: LoadingV by lazy { createDialogLoadingV() }
+
+    open fun createDialogLoadingV(): LoadingV {
+        return LoadingVFactory().createDialogDefaultLoadingV(this)
     }
 
     protected val loadingV: LoadingV by lazy {

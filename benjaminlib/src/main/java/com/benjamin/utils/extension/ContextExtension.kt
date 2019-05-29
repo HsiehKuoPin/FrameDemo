@@ -1,4 +1,4 @@
-package cn.ejiamall.extension
+package com.benjamin.utils.extension
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -9,7 +9,6 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.WindowManager
 import android.widget.Toast
-import com.benjamin.utils.eighteen.ToastUtils
 
 /**
  * Context扩展函数

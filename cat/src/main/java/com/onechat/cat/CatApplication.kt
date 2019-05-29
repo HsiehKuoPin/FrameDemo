@@ -28,7 +28,7 @@ class CatApplication : Application() {
 
     private fun initHttp() {
         val httpConfig = HttpConfig()
-        httpConfig.baseUrl = if (Env.buildType() == Env.DEBUG) "http://www.ichatcat.com:8088/onechat/"
+        httpConfig.baseUrl = if (Env.buildType() == Env.DEBUG) "https://www.wanandroid.com/"
         else "http://apigw.jizhigou.smartconns.com:9999/"
         httpConfig.isOpenLogger = Env.buildType() == Env.DEBUG
         httpConfig.resultConfig = NewHttpResultConfig()
