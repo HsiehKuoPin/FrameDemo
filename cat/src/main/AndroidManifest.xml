@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.web.WebActivity"></activity>
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +22,8 @@
         </activity>
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.test.TestActivity" />
-        <activity android:name=".ui.test.video.BannerActivity"></activity>
-        <activity android:name=".ui.test.video.TBannerActivity"></activity>
+        <activity android:name=".ui.test.video.BannerActivity" />
+        <activity android:name=".ui.test.video.TBannerActivity" />
     </application>
 
 </manifest>

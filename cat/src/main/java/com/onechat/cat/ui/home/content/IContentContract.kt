@@ -1,8 +1,8 @@
 package com.onechat.cat.ui.home.content
 
-import com.benjamin.base.mvp.IContract.IView
-import com.benjamin.base.mvp.IContract.IPresenter
-import com.benjamin.base.mvp.IContract.IModel
+import com.benjamin.base.mvp.IContract.*
+import com.onechat.cat.entity.AccountArticleEntity
+import io.reactivex.Observable
 
 /**
  * @describe
@@ -12,7 +12,16 @@ import com.benjamin.base.mvp.IContract.IModel
  */
 
 interface IContentContract {
-    interface View : IView {}
-    interface Presenter : IPresenter {}
-    interface Model : IModel {}
+    interface View : IView {
+        fun getAccountArticleSuccess(accountArticle: AccountArticleEntity)
+        fun getAccountArticleFail(msg: String)
+    }
+
+    interface Presenter : IPresenter {
+        fun getAccountArticle(id: Int, curPage: Int)
+    }
+
+    interface Model : IModel {
+        fun getAccountArticle(id: Int, curPage: Int): Observable<AccountArticleEntity>
+    }
 }

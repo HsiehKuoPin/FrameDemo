@@ -1,5 +1,9 @@
 package com.onechat.cat.ui.home.content
 
+import com.onechat.cat.entity.AccountArticleEntity
+import com.onechat.cat.net.NetProvider
+import io.reactivex.Observable
+
 /**
  * @describe
  * @author  Benjamin
@@ -8,6 +12,9 @@ package com.onechat.cat.ui.home.content
  */
 
 class ContentModel : IContentContract.Model {
+    override fun getAccountArticle(id: Int, curPage: Int): Observable<AccountArticleEntity> {
+        return NetProvider.instance.getAccountArticle(id, curPage)
+    }
 
 }
 

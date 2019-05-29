@@ -10,4 +10,5 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlackDarker">#162C3F</color>
     <color name="orange_light">#ffffbb33</color>
+    <color name="colorLine">#88D3D3D3</color>
 </resources>

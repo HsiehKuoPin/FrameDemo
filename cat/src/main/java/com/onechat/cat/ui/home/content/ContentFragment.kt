@@ -7,8 +7,9 @@ import com.benjamin.utils.eighteen.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.onechat.cat.R
-import com.onechat.cat.entity.AccountEntity
-import com.onechat.cat.ui.home.adapter.ContentFragment
+import com.onechat.cat.entity.AccountArticleEntity
+import com.onechat.cat.entity.ArticleIntroEntity
+import com.onechat.cat.ui.web.WebActivity
 import kotlinx.android.synthetic.main.content_fragment.*
 
 /**
@@ -19,6 +20,17 @@ import kotlinx.android.synthetic.main.content_fragment.*
  */
 
 class ContentFragment : MvpFragment<IContentContract.Presenter>(), IContentContract.View {
+    private var curPage = 1
+
+    private val adapter = object : BaseQuickAdapter<ArticleIntroEntity, BaseViewHolder>(R.layout.adapter_article) {
+
+        override fun convert(helper: BaseViewHolder, item: ArticleIntroEntity) {
+            helper.setText(R.id.tv_title, item.title)
+            helper.setText(R.id.tv_time, "时间：" + item.publishTime)
+        }
+
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.content_fragment
     }
@@ -29,22 +41,34 @@ class ContentFragment : MvpFragment<IContentContract.Presenter>(), IContentContr
 
     override fun initView() {
         super.initView()
-        val id = arguments?.getInt(KEY_ID)
-        ToastUtils.showShort("id:$id")
         rv.layoutManager = LinearLayoutManager(context)
-        val adapter = object : BaseQuickAdapter<List<AccountEntity>, BaseViewHolder>(R.layout.adapter_article){
-
-            override fun convert(helper: BaseViewHolder?, item: List<AccountEntity>?) {
-            }
-
-        }
         rv.adapter = adapter
+        adapter.setOnItemClickListener { adapter, view, position ->
+            WebActivity.start(context!!, (adapter.data[position] as ArticleIntroEntity).link!!)
+        }
+    }
+
+    override fun initData() {
+        super.initData()
+        val id = arguments?.getInt(KEY_ID)!!
+        appLoadingV.showProgressView()
+        mPresenter.getAccountArticle(id, curPage)
+    }
+
+    override fun getAccountArticleSuccess(accountArticle: AccountArticleEntity) {
+        appLoadingV.showContentView()
+        adapter.setNewData(accountArticle.datas)
+    }
+
+    override fun getAccountArticleFail(msg: String) {
+        appLoadingV.showContentView()
+        ToastUtils.showShort(msg)
     }
 
     companion object {
         private const val KEY_ID = "key_id"
-        fun newInstance(id: Int) = ContentFragment().apply { arguments = Bundle().apply { putInt(
-            KEY_ID, id) } }
+        @JvmStatic
+        fun newInstance(id: Int) = ContentFragment().apply { arguments = Bundle().apply { putInt(KEY_ID, id) } }
     }
 
 }

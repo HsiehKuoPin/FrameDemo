@@ -1,6 +1,8 @@
 package com.onechat.cat.ui.home.content
 
 import com.benjamin.base.mvp.BasePresenter
+import com.benjamin.utils.extension.io2main
+import com.benjamin.utils.extension.subscribeByHandle
 
 /**
  * @describe
@@ -10,8 +12,21 @@ import com.benjamin.base.mvp.BasePresenter
  */
 
 class ContentPresenter : BasePresenter<IContentContract.View, IContentContract.Model>(), IContentContract.Presenter {
+    override fun getAccountArticle(id: Int, curPage: Int) {
+        mModel.getAccountArticle(id, curPage)
+            .io2main()
+            .subscribeByHandle(
+                onSuccess = {
+                    mView?.getAccountArticleSuccess(it)
+                },
+                onFailure = {
+                    mView?.getAccountArticleFail(it.toString())
+                }
+            )
+    }
+
     override fun onCreateModel(): IContentContract.Model {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return ContentModel()
     }
 
 }
