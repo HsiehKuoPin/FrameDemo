@@ -3,6 +3,7 @@ package com.onechat.cat.ui.home.content
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.benjamin.base.mvp.MvpFragment
+import com.benjamin.utils.DateUtil
 import com.benjamin.utils.eighteen.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -26,7 +27,7 @@ class ContentFragment : MvpFragment<IContentContract.Presenter>(), IContentContr
 
         override fun convert(helper: BaseViewHolder, item: ArticleIntroEntity) {
             helper.setText(R.id.tv_title, item.title)
-            helper.setText(R.id.tv_time, "时间：" + item.publishTime)
+            helper.setText(R.id.tv_time, "时间：" + DateUtil.getfriendlyTime(item.publishTime) )
         }
 
     }

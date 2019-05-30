@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/tv_title"
         android:textColor="@color/colorBlack"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:text="hello~~"
         android:layout_marginStart="30dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,8 +18,8 @@
 
     <TextView
         android:id="@+id/tv_time"
-        android:textColor="@color/colorBlack"
-        android:textSize="20sp"
+        android:textColor="@color/colorGray"
+        android:textSize="18sp"
         android:text="2010-9~~"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"

@@ -41,12 +41,12 @@ class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View 
 
     override fun initData() {
         super.initData()
-        appLoadingV.showProgressView()
+        loadingV.showProgressView()
         mPresenter.getAccounts()
     }
 
     override fun getAccountsSuccess(accounts: List<AccountEntity>) {
-        appLoadingV.showContentView()
+        loadingV.showContentView()
         for (account in accounts) {
             fragments.add(ContentFragment.newInstance(account.id))
             titles.add(account.name)
