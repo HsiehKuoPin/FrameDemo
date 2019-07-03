@@ -37,7 +37,7 @@ abstract class BaseFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
-        StatusBarUtil.hideStatusNavigationBar(activity?.window)
+//        StatusBarUtil.hideStatusNavigationBar(activity?.window)
     }
 
     protected open val appLoadingV: LoadingV by lazy { (activity as BaseActivity).appLoadingV}

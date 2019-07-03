@@ -47,7 +47,7 @@ public class H5WebChromeClient extends WebChromeClient {
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
-        if (TextUtils.isEmpty(title))title = "";
+        if (TextUtils.isEmpty(title) || title.startsWith("http"))title = "";
 
         titles.put(currentUrl, title);
         String currentTitle = titles.get(currentUrl);

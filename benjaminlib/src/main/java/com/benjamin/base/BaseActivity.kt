@@ -110,7 +110,7 @@ abstract class BaseActivity : AppCompatActivity(), OnTitleBarViewListener {
 
     override fun onStart() {
         super.onStart()
-        StatusBarUtil.hideStatusNavigationBar(this.window)
+//        StatusBarUtil.hideStatusNavigationBar(this.window)
     }
 
     override fun onDestroy() {

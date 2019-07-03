@@ -27,17 +27,6 @@ class MainActivity : BaseActivity() {
         rb_home.performClick()
     }
 
-    private var clickBackTime: Long = 0
-    private var lastClickBackTime: Long = 0
-    override fun onBackPressed() {
-        clickBackTime = System.currentTimeMillis()
-        if (clickBackTime - lastClickBackTime > 2000) {
-            ToastUtils.showShort("再点一下退出~")
-        } else {
-            super.onBackPressed()
-        }
-        lastClickBackTime = clickBackTime
-    }
 
     private fun showFragment(fragment: Fragment) {
         if (fragment.isVisible) return
@@ -57,4 +46,15 @@ class MainActivity : BaseActivity() {
         fragmentTransaction.hide(mineFragment)
     }
 
+    private var clickBackTime: Long = 0
+    private var lastClickBackTime: Long = 0
+    override fun onBackPressed() {
+        clickBackTime = System.currentTimeMillis()
+        if (clickBackTime - lastClickBackTime > 2000) {
+            ToastUtils.showShort("再点一下退出~")
+        } else {
+            super.onBackPressed()
+        }
+        lastClickBackTime = clickBackTime
+    }
 }
