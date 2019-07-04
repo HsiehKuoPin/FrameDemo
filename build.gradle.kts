@@ -1,14 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
-    ext.kotlin_version = '1.2.71'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath("com.android.tools.build:gradle:3.2.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Vers.kotlinV}")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,7 +17,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://jitpack.io" }
+        maven(url = "https://jitpack.io")
     }
 
 //    tasks.withType(JavaCompile) {
@@ -28,17 +26,24 @@ allprojects {
 //        targetCompatibility = JavaVersion.VERSION_1_8
 //    }
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+task<Delete>(name = "clean"){
+    delete(rootProject.buildDir)
 }
 
+//task("clean", Delete::class){
+//    delete = setOf(rootProject.buildDir)
+//}
+//task clean(type: Delete) {
+//    delete rootProject.buildDir
+//}
+
 ext {
-    compileSdkVersion = 28
-    minSdkVersion = 19
-    targetSdkVersion = compileSdkVersion
-    supportLibVersion = '28.0.0'
-    versionCode = 1
-    versionName = '1.0.0'
-    retrofitSdkVersion = '2.4.0'
+    set("kotlinVersion", "1.2.71")
+    set("compileSdkVersion",28)
+    set("minSdkVersion",19)
+    set("targetSdkVersion",28)
+    set("supportLibVersion","28.0.0")
+    set("versionCode",1)
+    set("versionName","1.0.0")
+    set("retrofitSdkVersion","2.4.0")
 }
