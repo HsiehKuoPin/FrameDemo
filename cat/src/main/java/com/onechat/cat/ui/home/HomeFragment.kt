@@ -59,6 +59,7 @@ class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View 
     }
 
     override fun getAccountsFail(msg: String) {
+        loadingV.showErrorView(msg)
         ToastUtils.showShort(msg)
     }
 

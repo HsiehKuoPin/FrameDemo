@@ -18,6 +18,11 @@ class WebActivity : BaseActivity() {
         webView.setWebViewChangeTitleCallback { titleBarView?.title = it }
     }
 
+    override fun onBackPressed() {
+        if (webView.canGoBack()) webView.goBack()
+        else super.onBackPressed()
+    }
+
     companion object {
         const val KEY_URL = "key_url"
         fun start(context: Context, url: String) {
