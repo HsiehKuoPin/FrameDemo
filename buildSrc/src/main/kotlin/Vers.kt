@@ -3,7 +3,7 @@
  * @date 2019/7/3
  */
 object Vers {
-    const val kotlinV = "1.2.71"
+    const val kotlinV = "1.3.31"
     const val compileSdkV = 28
     const val minSdkV = 19
     const val targetSdkV = compileSdkV

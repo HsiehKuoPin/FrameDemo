@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.2.1")
+        classpath("com.android.tools.build:gradle:3.4.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Vers.kotlinV}")
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -37,13 +37,3 @@ task<Delete>(name = "clean"){
 //    delete rootProject.buildDir
 //}
 
-ext {
-    set("kotlinVersion", "1.2.71")
-    set("compileSdkVersion",28)
-    set("minSdkVersion",19)
-    set("targetSdkVersion",28)
-    set("supportLibVersion","28.0.0")
-    set("versionCode",1)
-    set("versionName","1.0.0")
-    set("retrofitSdkVersion","2.4.0")
-}

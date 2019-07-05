@@ -18,6 +18,7 @@ import com.orhanobut.logger.PrettyFormatStrategy
  * @date 2019/4/3
  */
 class CatApplication : Application() {
+    private val url = if (Env.buildType() == Env.DEBUG) "https://www.wanandroid.com/" else "https://www.wanandroid.com/"
 
     override fun onCreate() {
         super.onCreate()
@@ -28,8 +29,7 @@ class CatApplication : Application() {
 
     private fun initHttp() {
         val httpConfig = HttpConfig()
-        httpConfig.baseUrl = if (Env.buildType() == Env.DEBUG) "https://www.wanandroid.com/"
-        else "http://apigw.jizhigou.smartconns.com:9999/"
+        httpConfig.baseUrl = url
         httpConfig.isOpenLogger = Env.buildType() == Env.DEBUG
         httpConfig.resultConfig = NewHttpResultConfig()
 //        httpConfig.setTokenProvider { SPUtil.getString(this, "key_token") }

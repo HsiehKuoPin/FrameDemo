@@ -1,10 +1,20 @@
 import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
+import java.util.Properties
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
 }
+//apply("build.base.gradle.kts")
+//apply(plugin = "com.android.application")
+//apply(plugin = "kotlin-android")
+//apply(plugin = "kotlin-android-extensions")
+//apply{
+//    plugin("com.android.application")
+//    plugin("kotlin-android")
+//    plugin("kotlin-android-extensions")
+//}
 
 android{
     compileSdkVersion(Vers.compileSdkV)
@@ -19,10 +29,34 @@ android{
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes{
-        getByName("release") {
+    signingConfigs {
+        val appProFile = file("../local.properties")
+        val properties = Properties()
+        properties.load(appProFile.inputStream())
+        create("release") {
+            storeFile = file(properties["JKS_NAME"].toString())
+            storePassword = properties["STORE_PASSWORD"].toString()
+            keyAlias = properties["KEY_ALIAS"].toString()
+            keyPassword = properties["KEY_PASSWORD"].toString()
+        }
+    }
+
+    buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs?.getByName("release")
+        }
+
+        create("preview") {
             isMinifyEnabled = false
+            isZipAlignEnabled = false
+            isShrinkResources = false
+            signingConfig = signingConfigs?.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+
+        }
+
+        getByName("release") {
+            initWith(buildTypes.findByName("preview"))
         }
 
     }
@@ -33,9 +67,10 @@ android{
     }
 
     androidExtensions {
-        configure(delegateClosureOf<AndroidExtensionsExtension>{
-            isExperimental = true
-        })
+        isExperimental = true
+//        configure(delegateClosureOf<AndroidExtensionsExtension>{
+//            isExperimental = true
+//        })
     }
 
 }

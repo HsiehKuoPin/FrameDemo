@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.benjamin.R
 import com.benjamin.app.AppActivityManager
-import com.benjamin.utils.extension.StatusBarUtil
 import com.benjamin.widget.OnTitleBarViewListener
 import com.benjamin.widget.TitleBarView
 import com.benjamin.widget.loading.LoadingV
@@ -41,17 +40,17 @@ abstract class BaseActivity : AppCompatActivity(), OnTitleBarViewListener {
     open fun initData() {
     }
 
-    open val appLoadingV: LoadingV by lazy { createDialogLoadingV() }
+    open val loadingDialog: LoadingV by lazy { createDialogLoadingV() }
 
     open fun createDialogLoadingV(): LoadingV {
         return LoadingVFactory().createDialogDefaultLoadingV(this)
     }
 
-    protected val loadingV: LoadingV by lazy {
+    protected val loadingView: LoadingV by lazy {
         createLoadingV().apply {
             setOnRefreshingListener {
-                if (loadingV.isProgressShowing.not()) {
-                    loadingV.showProgressView()
+                if (loadingView.isProgressShowing.not()) {
+                    loadingView.showProgressView()
                 } else {
                     onProgressShowing()
                 }

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.benjamin.R
-import com.benjamin.utils.extension.StatusBarUtil
 import com.benjamin.widget.loading.LoadingV
 import com.benjamin.widget.loading.LoadingVFactory
 
@@ -40,12 +39,12 @@ abstract class BaseFragment : Fragment(){
 //        StatusBarUtil.hideStatusNavigationBar(activity?.window)
     }
 
-    protected open val appLoadingV: LoadingV by lazy { (activity as BaseActivity).appLoadingV}
-    protected val loadingV: LoadingV by lazy {
+    protected open val loadingDialog: LoadingV by lazy { (activity as BaseActivity).loadingDialog}
+    protected val loadingView: LoadingV by lazy {
         createLoadingV().apply {
             setOnRefreshingListener {
-                if (loadingV.isProgressShowing.not()) {
-                    loadingV.showProgressView()
+                if (loadingView.isProgressShowing.not()) {
+                    loadingView.showProgressView()
                 } else {
                     onProgressShowing()
                 }

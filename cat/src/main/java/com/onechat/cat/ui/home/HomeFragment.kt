@@ -41,12 +41,15 @@ class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View 
 
     override fun initData() {
         super.initData()
-        loadingV.showProgressView()
+        loadingView.showProgressView()
+    }
+
+    override fun onProgressShowing() {
         mPresenter.getAccounts()
     }
 
     override fun getAccountsSuccess(accounts: List<AccountEntity>) {
-        loadingV.showContentView()
+        loadingView.showContentView()
         for (account in accounts) {
             fragments.add(ContentFragment.newInstance(account.id))
             titles.add(account.name)
@@ -59,7 +62,7 @@ class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View 
     }
 
     override fun getAccountsFail(msg: String) {
-        loadingV.showErrorView(msg)
+        loadingView.showErrorView(msg)
         ToastUtils.showShort(msg)
     }
 

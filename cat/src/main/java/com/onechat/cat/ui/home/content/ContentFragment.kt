@@ -52,17 +52,17 @@ class ContentFragment : MvpFragment<IContentContract.Presenter>(), IContentContr
     override fun initData() {
         super.initData()
         val id = arguments!!.getInt(KEY_ID)
-//        appLoadingV.showProgressView()
+//        loadingDialog.showProgressView()
         mPresenter.getAccountArticle(id, curPage)
     }
 
     override fun getAccountArticleSuccess(accountArticle: AccountArticleEntity) {
-//        appLoadingV.showContentView()
+//        loadingDialog.showContentView()
         adapter.setNewData(accountArticle.datas)
     }
 
     override fun getAccountArticleFail(msg: String) {
-        appLoadingV.showContentView()
+        loadingDialog.showContentView()
         ToastUtils.showShort(msg)
     }
 

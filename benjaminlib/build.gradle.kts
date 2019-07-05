@@ -13,8 +13,11 @@ android {
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
 
     }
+    buildTypes {
 
-    buildTypes{
+        create("preview") {
+        }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
