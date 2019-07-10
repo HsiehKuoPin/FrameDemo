@@ -1,4 +1,4 @@
-package com.onechat.cat.ui.home.content
+package com.onechat.cat.ui.content
 
 import com.benjamin.base.mvp.BasePresenter
 import com.benjamin.utils.extension.io2main

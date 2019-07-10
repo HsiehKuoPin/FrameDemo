@@ -29,4 +29,25 @@ abstract class MvpActivity<P : IPresenter> : BaseActivity(), IView {
         super.onDestroy()
     }
 
+    override fun showProgressView() {
+        loadingView.showProgressView()
+    }
+
+    override fun showErrorView(errorMsg: String) {
+        loadingView.showErrorView(errorMsg)
+    }
+
+    override fun showNetworkErrorView(errorMsg: String) {
+        loadingView.showNetworkErrorView(errorMsg)
+    }
+
+    override fun showEmptyView() {
+        loadingView.showEmptyView()
+    }
+
+    override fun showContentView() {
+        loadingView.showContentView()
+    }
+
+
 }

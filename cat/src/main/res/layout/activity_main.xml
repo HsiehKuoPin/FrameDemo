@@ -33,7 +33,7 @@
             android:id="@+id/rb_category"
             style="@style/main_tab"
             android:drawableTop="@drawable/selector_tab_home"
-            android:text="分类"
+            android:text="公众号"
             app:topDrawableHeight="30dp"
             app:topDrawableWidth="30dp" />
 

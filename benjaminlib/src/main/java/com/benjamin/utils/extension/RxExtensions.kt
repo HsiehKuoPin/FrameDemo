@@ -49,11 +49,17 @@ fun <T> Observable<T>.subscribeByHandle(view: IView? = null, onSuccess: (data: T
 //}
 private fun <T> Observable<T>.subscribeWithErrorHandle(view: IView?, onSuccess: (data: T) -> Unit, onFailure: (e: HttpException) -> Unit): Disposable {
     return subscribeWith(object : ErrorHandleDisposableObserver<T>() {
+        override fun onStart() {
+            super.onStart()
+            view?.showProgressView()
+        }
         override fun onSuccess(t: T) {
+            view?.showContentView()
             onSuccess.invoke(t)
         }
 
         override fun onFailure(exception: HttpException) {
+            view?.showErrorView(exception.exMessage)
             if (exception.exCode == 9999)view?.onTokenInvalid()
             onFailure.invoke(exception)
         }

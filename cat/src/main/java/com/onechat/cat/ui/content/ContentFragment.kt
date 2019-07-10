@@ -1,10 +1,9 @@
-package com.onechat.cat.ui.home.content
+package com.onechat.cat.ui.content
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.benjamin.base.mvp.MvpFragment
 import com.benjamin.utils.DateUtil
-import com.benjamin.utils.eighteen.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.onechat.cat.R
@@ -22,6 +21,7 @@ import kotlinx.android.synthetic.main.content_fragment.*
 
 class ContentFragment : MvpFragment<IContentContract.Presenter>(), IContentContract.View {
     private var curPage = 1
+    private var accountId = 0
 
     private val adapter = object : BaseQuickAdapter<ArticleIntroEntity, BaseViewHolder>(R.layout.adapter_article) {
 
@@ -51,19 +51,22 @@ class ContentFragment : MvpFragment<IContentContract.Presenter>(), IContentContr
 
     override fun initData() {
         super.initData()
-        val id = arguments!!.getInt(KEY_ID)
-//        loadingDialog.showProgressView()
-        mPresenter.getAccountArticle(id, curPage)
+        accountId = arguments!!.getInt(KEY_ID)
+        loadingView.showProgressView()
+    }
+
+    override fun onProgressShowing() {
+        super.onProgressShowing()
+        mPresenter.getAccountArticle(accountId, curPage)
     }
 
     override fun getAccountArticleSuccess(accountArticle: AccountArticleEntity) {
-//        loadingDialog.showContentView()
+        loadingView.showContentView()
         adapter.setNewData(accountArticle.datas)
     }
 
     override fun getAccountArticleFail(msg: String) {
-        loadingDialog.showContentView()
-        ToastUtils.showShort(msg)
+        loadingView.showErrorView(msg)
     }
 
     companion object {

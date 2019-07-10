@@ -6,8 +6,8 @@ import com.benjamin.base.mvp.MvpFragment
 import com.benjamin.utils.eighteen.ToastUtils
 import com.onechat.cat.R
 import com.onechat.cat.entity.AccountEntity
+import com.onechat.cat.ui.content.ContentFragment
 import com.onechat.cat.ui.home.adapter.ViewPagerFragmentAdapter
-import com.onechat.cat.ui.home.content.ContentFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -39,9 +39,9 @@ class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View 
         vp_content.adapter = viewPagerFragmentAdapter
     }
 
-    override fun initData() {
-        super.initData()
-        loadingView.showProgressView()
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) loadingView.showProgressView()
     }
 
     override fun onProgressShowing() {

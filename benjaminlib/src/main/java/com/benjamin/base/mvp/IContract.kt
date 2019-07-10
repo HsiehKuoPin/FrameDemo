@@ -13,6 +13,16 @@ interface IContract {
 
     interface IView {
         fun onTokenInvalid()
+
+        fun showProgressView()
+
+        fun showErrorView(errorMsg: String)
+
+        fun showNetworkErrorView(errorMsg: String)
+
+        fun showEmptyView()
+
+        fun showContentView()
     }
 
     interface IModel {

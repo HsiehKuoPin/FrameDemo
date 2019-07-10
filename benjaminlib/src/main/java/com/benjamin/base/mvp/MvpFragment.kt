@@ -29,4 +29,24 @@ abstract class MvpFragment<P : IPresenter> : BaseFragment(),IView {
         super.onDestroy()
     }
 
+    override fun showProgressView() {
+        if (loadingView.isProgressShowing.not()) loadingView.showProgressView()
+    }
+
+    override fun showErrorView(errorMsg: String) {
+        loadingView.showErrorView(errorMsg)
+    }
+
+    override fun showNetworkErrorView(errorMsg: String) {
+        loadingView.showNetworkErrorView(errorMsg)
+    }
+
+    override fun showEmptyView() {
+        loadingView.showEmptyView()
+    }
+
+    override fun showContentView() {
+        loadingView.showContentView()
+    }
+
 }

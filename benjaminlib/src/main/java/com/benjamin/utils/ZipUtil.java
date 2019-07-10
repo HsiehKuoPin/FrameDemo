@@ -17,7 +17,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class ZipUtil {
-	
+
 	/**
 	 * 压缩文件
 	 * @return 压缩成功或失败
@@ -80,13 +80,12 @@ public class ZipUtil {
 	       }  
 	   } 
 	
-	/** 
+	/**
      * 压缩文件 
      * @param folderString 
      * @param fileString 
      * @param zipOutputSteam 
-     * @throws Exception
-     */  
+     */
     private static void ZipFiles(String folderString, String fileString, ZipOutputStream zipOutputSteam)throws Exception {
         android.util.Log.v("XZip", "ZipFiles(String, String, ZipOutputStream)");  
           

@@ -14,7 +14,7 @@ import io.reactivex.Observable
 
 class RegisterModel : IRegisterContract.Model {
     override fun register(requestBody: RequestEntity): Observable<MemberEntity> {
-        return NetProvider.instance.register(requestBody)
+        return NetProvider.getInstance().register(requestBody)
     }
 
 }

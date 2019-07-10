@@ -5,13 +5,14 @@ import android.support.v4.app.FragmentTransaction
 import com.benjamin.base.BaseActivity
 import com.benjamin.utils.eighteen.ToastUtils
 import com.onechat.cat.R
+import com.onechat.cat.ui.account.AccountFragment
 import com.onechat.cat.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
     // macAddress: 90:09:19:cb:d7:6d 201905007
     private val homeFragment = HomeFragment.newInstance()
-    private val categoryFragment = HomeFragment.newInstance()
+    private val accountFragment = AccountFragment.newInstance()
     private val recommendFragment = HomeFragment.newInstance()
     private val mineFragment = HomeFragment.newInstance()
     override fun getLayoutId(): Int {
@@ -21,7 +22,7 @@ class MainActivity : BaseActivity() {
     override fun initView() {
         super.initView()
         rb_home.setOnClickListener { showFragment(homeFragment) }
-        rb_category.setOnClickListener { showFragment(categoryFragment) }
+        rb_category.setOnClickListener { showFragment(accountFragment) }
         rb_recommend.setOnClickListener { showFragment(recommendFragment) }
         rb_mine.setOnClickListener { showFragment(mineFragment) }
         rb_home.performClick()
@@ -41,7 +42,7 @@ class MainActivity : BaseActivity() {
 
     private fun hideAllFragment(fragmentTransaction: FragmentTransaction) {
         fragmentTransaction.hide(homeFragment)
-        fragmentTransaction.hide(categoryFragment)
+        fragmentTransaction.hide(accountFragment)
         fragmentTransaction.hide(recommendFragment)
         fragmentTransaction.hide(mineFragment)
     }

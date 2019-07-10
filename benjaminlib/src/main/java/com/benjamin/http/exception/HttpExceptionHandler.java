@@ -3,7 +3,6 @@ package com.benjamin.http.exception;
 import android.net.ParseException;
 import android.os.NetworkOnMainThreadException;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import org.apache.http.conn.ConnectTimeoutException;
@@ -48,7 +47,7 @@ public class HttpExceptionHandler {
             ex.exMessage = "HTTP主线程访问";
         } else if (e instanceof UnknownHostException) {
             ex.exCode = HttpResultCode.UN_KNOW_HOST;
-            ex.exMessage = "HTTP未知主机";
+            ex.exMessage = "无法确定主机的IP地址";
         } else {
             ex.exCode = HttpResultCode.HTTP_UNKNOWN;
             ex.exMessage = "未知异常";

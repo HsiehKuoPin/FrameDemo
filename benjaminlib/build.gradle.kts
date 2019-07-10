@@ -3,7 +3,7 @@ plugins {
     id("kotlin-android")
 }
 android {
-            compileSdkVersion(Vers.compileSdkV)
+    compileSdkVersion(Vers.compileSdkV)
     defaultConfig {
         minSdkVersion(Vers.minSdkV)
         targetSdkVersion(Vers.targetSdkV)

@@ -1,4 +1,4 @@
-package com.onechat.cat.ui.home.content
+package com.onechat.cat.ui.content
 
 import com.benjamin.base.mvp.IContract.*
 import com.onechat.cat.entity.AccountArticleEntity

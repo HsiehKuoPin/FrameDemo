@@ -8,8 +8,12 @@ import com.benjamin.http.RetrofitManager
  */
 object NetProvider {
 
-    val instance: APIService
-        get() = RetrofitManager.create(APIService::class.java)
+//    val instance: APIService
+//        get() = RetrofitManager.create(APIService::class.java)
+
+    fun getInstance(): APIService {
+        return RetrofitManager.create(APIService::class.java)
+    }
 
     fun getInstance(baseUrl: String): APIService {
         return RetrofitManager.create(APIService::class.java, baseUrl)

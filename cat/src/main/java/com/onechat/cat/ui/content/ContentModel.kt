@@ -1,4 +1,4 @@
-package com.onechat.cat.ui.home.content
+package com.onechat.cat.ui.content
 
 import com.onechat.cat.entity.AccountArticleEntity
 import com.onechat.cat.net.NetProvider
@@ -13,7 +13,7 @@ import io.reactivex.Observable
 
 class ContentModel : IContentContract.Model {
     override fun getAccountArticle(id: Int, curPage: Int): Observable<AccountArticleEntity> {
-        return NetProvider.instance.getAccountArticle(id, curPage)
+        return NetProvider.getInstance().getAccountArticle(id, curPage)
     }
 
 }
