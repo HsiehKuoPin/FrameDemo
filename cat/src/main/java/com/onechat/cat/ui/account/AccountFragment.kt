@@ -8,7 +8,7 @@ import com.benjamin.base.mvp.MvpFragment
 import com.onechat.cat.R
 import com.onechat.cat.entity.AccountEntity
 import com.onechat.cat.ui.content.ContentFragment
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_account.*
 
 /**
  * @describe

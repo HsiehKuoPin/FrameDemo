@@ -33,5 +33,16 @@ interface APIService {
     @GET("wxarticle/list/{id}/{curPage}/json")
     fun getAccountArticle(@Path("id") id: Int,
                            @Path("curPage") curPage: Int): Observable<AccountArticleEntity>
+    /**
+     * 首页banner
+     */
+    @GET("banner/json")
+    fun getBanner(): Observable<List<BannerEntity>>
+
+    /**
+     * 首页文章列表
+     */
+    @GET("article/list/{id}/json")
+    fun getArticle(@Path("id") id: Int): Observable<AccountArticleEntity>
 
 }

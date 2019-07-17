@@ -1,6 +1,7 @@
 package com.onechat.cat.ui.home
 
-import com.onechat.cat.entity.AccountEntity
+import com.onechat.cat.entity.AccountArticleEntity
+import com.onechat.cat.entity.BannerEntity
 import com.onechat.cat.net.NetProvider
 import io.reactivex.Observable
 
@@ -12,8 +13,12 @@ import io.reactivex.Observable
  */
 
 class HomeModel : IHomeContract.Model {
-    override fun getAccounts(): Observable<List<AccountEntity>> {
-        return NetProvider.getInstance().getAccounts()
+    override fun getBanner(): Observable<List<BannerEntity>> {
+        return NetProvider.getInstance().getBanner()
+    }
+
+    override fun getArticle(id: Int): Observable<AccountArticleEntity> {
+        return NetProvider.getInstance().getArticle(id)
     }
 
 }

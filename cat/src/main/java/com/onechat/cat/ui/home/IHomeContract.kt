@@ -1,7 +1,9 @@
 package com.onechat.cat.ui.home
 
 import com.benjamin.base.mvp.IContract.*
-import com.onechat.cat.entity.AccountEntity
+import com.onechat.cat.entity.AccountArticleEntity
+import com.onechat.cat.entity.BannerEntity
+import com.onechat.cat.entity.MultipleItem
 import io.reactivex.Observable
 
 /**
@@ -13,15 +15,19 @@ import io.reactivex.Observable
 
 interface IHomeContract {
     interface View : IView {
-        fun getAccountsSuccess(accounts: List<AccountEntity>)
-        fun getAccountsFail(msg: String)
+        fun getHomes(datas: List<MultipleItem>)
+
     }
 
     interface Presenter : IPresenter {
-        fun getAccounts()
+        fun getHomes()
     }
 
     interface Model : IModel {
-        fun getAccounts(): Observable<List<AccountEntity>>
+        //        fun getAccounts(): Observable<List<AccountEntity>>
+        fun getBanner(): Observable<List<BannerEntity>>
+
+        fun getArticle(id: Int): Observable<AccountArticleEntity>
+
     }
 }

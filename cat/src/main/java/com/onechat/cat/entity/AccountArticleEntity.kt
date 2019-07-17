@@ -23,5 +23,5 @@ class AccountArticleEntity {
     var pageCount: Int = 0
     var size: Int = 0
     var total: Int = 0
-    var datas: List<ArticleIntroEntity>? = null
+    var datas: List<ArticleIntroEntity> = listOf()
 }

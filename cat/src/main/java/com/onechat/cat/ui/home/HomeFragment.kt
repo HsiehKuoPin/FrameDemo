@@ -1,13 +1,11 @@
 package com.onechat.cat.ui.home
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import com.benjamin.base.mvp.MvpFragment
-import com.benjamin.utils.eighteen.ToastUtils
 import com.onechat.cat.R
-import com.onechat.cat.entity.AccountEntity
-import com.onechat.cat.ui.content.ContentFragment
-import com.onechat.cat.ui.home.adapter.ViewPagerFragmentAdapter
+import com.onechat.cat.entity.MultipleItem
+import com.onechat.cat.ui.home.adapter.MultipleItemQuickAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -19,11 +17,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
  */
 
 class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View {
-
-    private var viewPagerFragmentAdapter: ViewPagerFragmentAdapter? = null
-    private val titles = mutableListOf<CharSequence>()
-    private val fragments = mutableListOf<Fragment>()
-
+//    private val homeAdapter by lazy { HomeAdapter() }
+    private val homeAdapter by lazy { MultipleItemQuickAdapter(null) }
     override fun getLayoutId(): Int {
         return R.layout.fragment_home
     }
@@ -34,9 +29,8 @@ class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View 
 
     override fun initView() {
         super.initView()
-        tl_accounts.setupWithViewPager(vp_content)
-        viewPagerFragmentAdapter = ViewPagerFragmentAdapter(childFragmentManager, fragments, titles)
-        vp_content.adapter = viewPagerFragmentAdapter
+        rv_home.layoutManager = LinearLayoutManager(context)
+        rv_home.adapter = homeAdapter
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -45,26 +39,13 @@ class HomeFragment : MvpFragment<IHomeContract.Presenter>(), IHomeContract.View 
     }
 
     override fun onProgressShowing() {
-        mPresenter.getAccounts()
+        mPresenter.getHomes()
     }
 
-    override fun getAccountsSuccess(accounts: List<AccountEntity>) {
-        loadingView.showContentView()
-        for (account in accounts) {
-            fragments.add(ContentFragment.newInstance(account.id))
-            titles.add(account.name)
-        }
-        viewPagerFragmentAdapter?.run {
-            listTitle = titles
-            listFragment = fragments
-            notifyDataSetChanged()
-        }
+    override fun getHomes(datas: List<MultipleItem>) {
+        homeAdapter.setNewData(datas)
     }
 
-    override fun getAccountsFail(msg: String) {
-        loadingView.showErrorView(msg)
-        ToastUtils.showShort(msg)
-    }
 
     companion object {
         const val KEY_VALUE = "key_value"
