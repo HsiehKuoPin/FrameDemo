@@ -1,5 +1,4 @@
-import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
-import java.util.Properties
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -93,5 +92,6 @@ dependencies{
     implementation ("com.danikula:videocache:2.7.1")
     implementation ("com.youth.banner:banner:1.4.10")
     implementation ("com.github.bumptech.glide:glide:4.9.0")
+    implementation ("com.github.bumptech.glide:okhttp3-integration:4.9.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.9.0")
 }
